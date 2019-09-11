@@ -1,0 +1,244 @@
+﻿<Page x:Class="tktclient.TktExchange"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:tktclient.Controls"
+      Title="TktExchange" DataContext="{Binding Path=TicketExchange, Source={StaticResource SaleLocator}}">
+    <FrameworkElement.Resources>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="FrameworkElement.Margin" Value="0"/>
+            <Setter Property="Control.Foreground" Value="{StaticResource MainGrayForeground}"/>
+        </Style>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="TextBlock.FontSize" Value="13"/>
+        </Style>
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="Control.Foreground" Value="{StaticResource MainGrayForeground}"/>
+        </Style>
+    </FrameworkElement.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Column="0" Background="{DynamicResource MainSideBackground}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="65"/>
+            </Grid.RowDefinitions>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Width="380">
+                <local:SearchTextbox x:Name="tbSearch" Width="235" Height="34" Margin="0 0 5 0" SearchHint="交易号、票号、证件号、IC卡号"
+                                Background="White" SearchDelVisible="true" InputMethodEnable="false"
+                                SearchCommand="{Binding SearchCommand}" InputEnterCommand="{Binding SearchCommand}"
+                                Text="{Binding SearchKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Style="{DynamicResource NumLeftButtonStyle}" Width="70" Height="34"
+                Command="{Binding ReadCardCommand}" Visibility="Hidden">
+                    <ContentControl.Content>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock x:Name="tbIcon" Text="" Style="{DynamicResource WPIconFont}" VerticalAlignment="Center"
+                         FontSize="18" Height="{Binding Path=FontSize, RelativeSource={RelativeSource Self}}"/>
+                            <TextBlock Text="读IC卡" Margin="3 0 0 0" VerticalAlignment="Center" FontSize="12" Foreground="#54a7ff"/>
+                        </StackPanel>
+                    </ContentControl.Content>
+                </Button>
+                <Button Style="{DynamicResource NumRightButtonStyle}" Width="70" Height="34"
+                Command="{Binding ReadIdCardCommand}" Visibility="Hidden">
+                    <ContentControl.Content>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="" Style="{DynamicResource WPIconFont}" VerticalAlignment="Center" FontSize="18"
+                         Height="{Binding Path=FontSize, RelativeSource={RelativeSource Self}}"/>
+                            <TextBlock Text="身份证" Margin="3 0 0 0" VerticalAlignment="Center" FontSize="12" Foreground="#54a7ff"/>
+                        </StackPanel>
+                    </ContentControl.Content>
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="查询结果" Margin="22 0 0 0"/>
+                    <Border Width="1.5" Height="13" Background="{StaticResource MainGrayForeground}" Margin="10 0 0 0"
+                  Opacity="0.7"/>
+                    <TextBlock Text="共" Margin="10 0 0 0"/>
+                    <TextBlock Foreground="{StaticResource MainNumForeground}" Margin="5 0 5 0" Text="{Binding RecordCount}"/>
+                    <TextBlock Text="条记录"/>
+                </StackPanel>
+            </StackPanel>
+            <ListBox Name="listTickets" Margin="0 10 0 0" Grid.Row="2"
+               ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="false"
+               ItemsSource="{Binding OrderInfoCollection}">
+                <FrameworkElement.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="清空" Command="{Binding ClearCommand}"/>
+                    </ContextMenu>
+                </FrameworkElement.ContextMenu>
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="Control.Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <local:TicketOperateButton Margin="0 5 0 5" Width="380" Height="66" GroupName="TicketOperateButton" HorizontalAlignment="Left"
+                                                CommandParameter="{Binding}" DataContext="{Binding}" Click="TicketOperateButton_Click"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ListBox>
+            <Grid Row="3" Background="#dde5ea" Visibility="Hidden">
+                <StackPanel HorizontalAlignment="Center" Height="34" Margin="0 0 0 0" Orientation="Horizontal">
+                    <Button Width="80" Height="34" Content="充值" Background="#30a8fa" Foreground="White"
+                  Style="{DynamicResource NormalLeftButtonStyle}" Command="{Binding RechargeCommand}"/>
+                    <Button Width="80" Height="34" Content="退票" Background="#30a8fa" Foreground="White"
+                  Style="{DynamicResource NormalMidButtonStyle}" Margin="0.6 0 0 0"
+                  Command="{Binding RefundTicketCommand}"/>
+                    <Button Width="80" Height="34" Content="退余额" Background="#30a8fa" Foreground="White"
+                  Style="{DynamicResource NormalMidButtonStyle}" Margin="0.6 0 0 0"
+                  Command="{Binding RefundAmountCommand}"/>
+                    <Button Width="80" Height="34" Content="重打门票" Background="#30a8fa" Foreground="White"
+                  Style="{DynamicResource NormalMidButtonStyle}" Margin="0.6 0 0 0"
+                  Command="{Binding RePrintCommand}"/>
+                </StackPanel>
+                <Popup x:Name="Pop" PopupAnimation="Fade" Width="260" Placement="Top" AllowsTransparency="true"
+               StaysOpen="false" Height="{Binding ElementName=btnMore, Path=ActualHeight}"
+               PlacementTarget="{Binding ElementName=gridLeft}">
+                    <StackPanel Name="spAllFuncs" Background="Transparent">
+                        <Button Foreground="#ace533" FontSize="20" Tag="" Content="散客售票"
+                    Style="{DynamicResource IconLeftButtonStyle}"/>
+                        <Button Foreground="#21a6fe" FontSize="20" Tag="" Content="团队售票"
+                    Style="{DynamicResource IconLeftButtonStyle}"/>
+                        <Button Foreground="#4cd5a4" FontSize="20" Tag="" Content="门票操作"
+                    Style="{DynamicResource IconLeftButtonStyle}"/>
+                        <Button Foreground="#e35617" FontSize="20" Tag="" Content="电商出票"
+                    Style="{DynamicResource IconLeftButtonStyle}"/>
+                        <Button Foreground="#dfdf2e" FontSize="23" Tag="" Content="废票登记"
+                    Style="{DynamicResource IconLeftButtonStyle}"/>
+                        <Button Foreground="#0ed7ff" FontSize="23" Tag="" Content="交易查询"
+                    Style="{DynamicResource IconLeftButtonStyle}"/>
+                        <Button Foreground="#4ad5a6" FontSize="20" Tag="" Content="团队预定"
+                    Style="{DynamicResource IconLeftButtonStyle}"/>
+                        <Button Foreground="#9324ff" FontSize="20" Tag="" Content="团队接待"
+                    Style="{DynamicResource IconLeftButtonStyle}"/>
+                    </StackPanel>
+                </Popup>
+            </Grid>
+            <local:ProcessGrid x:Name="process" Grid.RowSpan="4" Grid.ColumnSpan="2" BusyText="{Binding BusyContent}"
+                            Visibility="{Binding IsBusy, Converter={StaticResource bvc}}"/>
+        </Grid>
+        <Grid Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="57"/>
+                <RowDefinition Height="137"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="门票列表" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20 0 0 0"
+                Foreground="{StaticResource MainGrayForeground}"/>
+            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0 0 25 0">
+                <TextBlock Text="机内余票：" Foreground="{StaticResource MainGrayForeground}"/>
+                <TextBlock FontWeight="Bold" MinWidth="50" Foreground="{StaticResource MainGrayForeground}"
+                   Text="{Binding RemainTicket}" />
+                <TextBlock Text="剩余碳带：" Margin="20 0 0 0" Foreground="{StaticResource MainGrayForeground}" />
+                <TextBlock FontWeight="Bold" MinWidth="50"
+                   Text="{Binding RemainRibbons}" Foreground="{StaticResource MainGreenForeground}"/>
+            </StackPanel>
+            <Border Grid.Row="1" Margin="20 0 20 0" BorderThickness="1" BorderBrush="{StaticResource MainBorderBrush}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Row="0">
+                        <FrameworkElement.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="TextBlock.FontSize" Value="12"/>
+                                <Setter Property="FrameworkElement.HorizontalAlignment" Value="Left"/>
+                                <Setter Property="FrameworkElement.VerticalAlignment" Value="Center"/>
+                                <Setter Property="TextBlock.Foreground" Value="{StaticResource MainGrayForeground}"/>
+                                <Setter Property="FrameworkElement.Margin" Value="13 0 0 0"/>
+                            </Style>
+                        </FrameworkElement.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.6*"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="210"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Background="Transparent" Grid.ColumnSpan="5"  BorderBrush="{StaticResource MainBorderBrush}"
+                            BorderThickness="0 0 0 1" Opacity="0.5"/>
+                        <TextBlock Text="票名" Grid.Column="0"/>
+                        <TextBlock Text="姓名" Grid.Column="1" HorizontalAlignment="Left" Margin="0"/>
+                        <TextBlock Text="场次" Grid.Column="2" HorizontalAlignment="Center" Margin="0"/>
+                        <TextBlock Text="使用日期" Grid.Column="3" HorizontalAlignment="Left" Margin="0 0 30 0"/>
+                        <TextBlock Text="数量（张）" Grid.Column="4" HorizontalAlignment="Left" Margin="0 0 0 0"/>
+                        <TextBlock Text="已打印（张）" Grid.Column="5" HorizontalAlignment="Left" Margin="0 0 0 0"/>
+                    </Grid>
+                    <ListBox Name="listSelected" Grid.Row="1" Focusable="true" ItemsSource="{Binding SelectedSubOrders}">
+                        <FrameworkElement.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="清空" Command="{Binding ClearCommand}"/>
+                                <MenuItem Header="移除选中项" Command="{Binding DeleteCommand}"/>
+                            </ContextMenu>
+                        </FrameworkElement.ContextMenu>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="Control.Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                            <local:TicketButton Margin="0" Height="60" GroupName="SelectedTicket" HorizontalAlignment="Stretch"
+                                                                           DataContext="{Binding}"/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                    </ListBox>
+                </Grid>
+            </Border>
+            <Border Grid.Row="2" Background="{DynamicResource MainSideBackground}" BorderThickness="1 0 1 0"
+              BorderBrush="#e4e9ea" Margin="20 0 20 0">
+                <Grid>
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal" Margin="15 0 0 0">
+                        <TextBlock Text="打印票数：" VerticalAlignment="Center"/>
+                        <TextBlock FontSize="15" VerticalAlignment="Center"
+                       Text="{Binding PrintQuantity}"/>
+                        <TextBlock Text="总人数：" VerticalAlignment="Center"
+                       Margin="30 0 0 0"/>
+                        <TextBlock FontSize="15" VerticalAlignment="Center"
+                       Text="{Binding PerQuantity}"/>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Right" Height="34" Margin="0 0 15 0" Orientation="Horizontal">
+
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border Grid.Row="3" BorderThickness="1 0 1 1" BorderBrush="#e4e9ea" Margin="20 0 20 20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Border CornerRadius="3" BorderThickness="1" BorderBrush="#e4e9ea" Margin="15 0 15 0" Height="80">
+                        <TextBox BorderThickness="0" Foreground="{StaticResource MainGrayForeground}"
+                     VerticalAlignment="Stretch" TextWrapping="Wrap" VerticalContentAlignment="Top"
+                     BorderBrush="Transparent" Padding="0" FontSize="12" Margin="10 5 10 5"
+                     Text="{Binding Remark, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <Button x:Name="btnSettle" Width="244" Height="80" FontSize="14" Grid.Column="1" Margin="0 0 16 0"
+                  BorderThickness="0" Background="{DynamicResource MainBlueColor}" Command="{Binding PrintCommand}">
+                        <Grid Width="228">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="确认打印" Foreground="{StaticResource MainTextForeground}" FontSize="23" Width="100"
+                         Margin="10 0 0 0" TextWrapping="Wrap" />
+                        </Grid>
+                    </Button>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>

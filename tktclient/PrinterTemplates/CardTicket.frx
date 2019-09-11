@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" StartReportEvent="_StartReport" ReportInfo.Created="04/01/2014 11:31:20" ReportInfo.Modified="12/17/2018 17:39:54" ReportInfo.CreatorVersion="2013.2.5.0">
+  <Dictionary/>
+  <ReportPage Name="Page1" PaperWidth="69" PaperHeight="112" LeftMargin="0" TopMargin="0" RightMargin="0" BottomMargin="0" FirstPageSource="256" OtherPagesSource="256">
+    <PageHeaderBand Name="PageHeader1" Width="260.82" Height="434.7" Guides="359.1">
+      <TextObject Name="Text10" Left="139.86" Top="232.47" Width="18.9" Height="60.48" Text="出票时间:" Padding="0, 0, 0, 0" HorzAlign="Right" VertAlign="Center" Angle="90" Font="微软雅黑, 9pt"/>
+      <TextObject Name="Text4" Left="196.56" Top="232.47" Width="18.9" Height="60.48" Text="名称:" Padding="0, 0, 0, 0" HorzAlign="Right" VertAlign="Center" Angle="90" Font="微软雅黑, 9pt"/>
+      <TextObject Name="txtSaleDate" Left="139.86" Top="296.73" Width="20.79" Height="128.52" Padding="0, 0, 0, 0" HorzAlign="Justify" VertAlign="Center" Angle="90" Font="微软雅黑, 9pt"/>
+      <TextObject Name="txtCardNO" Left="177.66" Top="296.73" Width="20.79" Height="128.52" Padding="0, 0, 0, 0" HorzAlign="Justify" VertAlign="Center" Angle="90" Font="微软雅黑, 9pt"/>
+      <TextObject Name="txtCardName" Left="196.56" Top="296.73" Width="20.79" Height="128.52" Padding="0, 0, 0, 0" HorzAlign="Justify" VertAlign="Center" Angle="90" Font="微软雅黑, 9pt"/>
+      <TextObject Name="Text6" Left="177.66" Top="232.47" Width="18.9" Height="60.48" Text="卡号:" Padding="0, 0, 0, 0" HorzAlign="Right" VertAlign="Center" Angle="90" Font="微软雅黑, 9pt"/>
+      <TextObject Name="Text2" Left="158.76" Top="232.47" Width="18.9" Height="60.48" Text="有效期:" Padding="0, 0, 0, 0" HorzAlign="Right" VertAlign="Center" Angle="90" Font="微软雅黑, 9pt"/>
+      <TextObject Name="txtInvalidDate" Left="158.76" Top="296.73" Width="20.79" Height="128.52" Padding="0, 0, 0, 0" HorzAlign="Justify" VertAlign="Center" Angle="90" Font="微软雅黑, 9pt"/>
+      <PictureObject Name="picBarCode" Left="28.35" Top="275.94" Width="98.28" Height="98.28" Angle="90"/>
+      <TextObject Name="txtClient" Left="-32.13" Top="35.91" Width="20.79" Height="151.2" Padding="0, 0, 0, 0" HorzAlign="Justify" VertAlign="Center" Angle="270" Font="微软雅黑, 9pt"/>
+    </PageHeaderBand>
+  </ReportPage>
+</Report>

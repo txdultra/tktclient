@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="04/01/2014 11:31:20" ReportInfo.Modified="07/17/2019 13:15:51" ReportInfo.CreatorVersion="2013.2.5.0">
+  <Dictionary/>
+  <ReportPage Name="Page1" PaperWidth="80" PaperHeight="150" LeftMargin="0" TopMargin="0" RightMargin="0" BottomMargin="0" FirstPageSource="256" OtherPagesSource="256">
+    <PageHeaderBand Name="PageHeader1" Width="302.4" Height="531.09">
+      <TextObject Name="Text1" Left="56.7" Top="122.85" Width="17.01" Height="47.25" Text="金额：" Padding="0, 0, 0, 0" HorzAlign="Right" Angle="270" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtTotalMoney" Left="54.81" Width="18.9" Height="122.85" Text="0元" Padding="0, 0, 0, 0" Angle="270" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text3" Left="255.15" Top="151.2" Width="17.01" Height="66.15" Text="出票期：" Padding="0, 0, 0, 0" HorzAlign="Right" Angle="270" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text4" Left="18.9" Top="122.85" Width="18.9" Height="47.25" Text="票名：" Padding="0, 0, 0, 0" HorzAlign="Right" Angle="270" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtSaleDate" Left="255.15" Width="18.9" Height="160.65" Text="2014-05-14" Padding="0, 0, 0, 0" Angle="270" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtBarCode" Left="234.36" Top="9.45" Width="18.9" Height="132.3" Text="ET2222332556525" Padding="0, 0, 0, 0" Angle="270" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtTicketModelInfo" Left="17.01" Width="18.9" Height="122.85" Text="西溪湿地亲子套票" Padding="0, 0, 0, 0" Angle="270" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text2" Left="75.6" Top="122.85" Width="17.01" Height="47.25" Text="人数：" Padding="0, 0, 0, 0" HorzAlign="Right" Angle="270" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtPeopleCount" Left="73.71" Top="47.25" Width="18.9" Height="75.6" Text="65人" Padding="0, 0, 0, 0" Angle="270" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text7" Left="274.05" Top="141.75" Width="17.01" Height="66.15" Text="有效期：" Padding="0, 0, 0, 0" Angle="270" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtInvalidDate" Left="274.05" Top="66.15" Width="18.9" Height="94.5" Text="2015-10-10" Padding="0, 0, 0, 0" Angle="270" Font="微软雅黑, 10pt"/>
+      <PictureObject Name="picBarCode" Left="113.4" Top="56.7" Width="94.5" Height="94.5"/>
+      <TextObject Name="Text5" Left="37.8" Top="122.85" Width="17.01" Height="47.25" Text="姓名：" Padding="0, 0, 0, 0" HorzAlign="Right" Angle="270" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtAccountName" Left="35.91" Top="56.7" Width="18.9" Height="66.15" Text="售票员" Padding="0, 0, 0, 0" Angle="270" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text8" Left="274.05" Top="18.9" Width="17.01" Height="66.15" Text="20:00止" Padding="0, 0, 0, 0" HorzAlign="Center" VertAlign="Center" Angle="270" Font="微软雅黑, 10pt"/>
+    </PageHeaderBand>
+  </ReportPage>
+</Report>

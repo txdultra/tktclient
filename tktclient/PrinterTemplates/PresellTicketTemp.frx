@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="04/01/2014 11:31:20" ReportInfo.Modified="07/12/2017 18:02:10" ReportInfo.CreatorVersion="2013.2.5.0">
+  <Dictionary/>
+  <ReportPage Name="Page1" PaperWidth="68" PaperHeight="148" LeftMargin="0" TopMargin="0" RightMargin="0" BottomMargin="0" FirstPageSource="256" OtherPagesSource="256">
+    <PageHeaderBand Name="PageHeader1" Width="257.04" Height="531.09">
+      <TextObject Name="Text1" Left="28.35" Top="66.15" Width="66.15" Height="18.9" Text="金额：" HorzAlign="Right" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtTotalMoney" Left="94.5" Top="66.15" Width="141.75" Height="18.9" Text="0元" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text3" Left="9.45" Top="103.95" Width="85.05" Height="18.9" Text="出票日期：" HorzAlign="Right" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text4" Left="28.35" Top="9.45" Width="66.15" Height="18.9" Text="门票：" HorzAlign="Right" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtSaleDate" Left="92.61" Top="103.95" Width="141.75" Height="18.9" Text="2014-05-14" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtBarCode" Left="94.5" Top="28.35" Width="160.65" Height="18.9" Text="ET2222332556525" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtTicketModelInfo" Left="94.5" Top="9.45" Width="198.45" Height="18.9" Text="西溪湿地亲子套票" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text6" Left="28.35" Top="28.35" Width="66.15" Height="18.9" Text="票号：" HorzAlign="Right" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text2" Left="28.35" Top="47.25" Width="66.15" Height="18.9" Text="人数：" HorzAlign="Right" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtPeopleCount" Left="94.5" Top="47.25" Width="141.75" Height="18.9" Text="65人" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text7" Top="122.85" Width="94.5" Height="18.9" Text="激活有效期：" HorzAlign="Right" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtBeginDate" Left="92.61" Top="122.85" Width="141.75" Height="37.8" Text="2015-10-10" Font="微软雅黑, 10pt"/>
+      <PictureObject Name="picBarCode" Left="85.05" Top="170.1" Width="85.05" Height="85.05"/>
+      <TextObject Name="Text5" Left="28.35" Top="85.05" Width="66.15" Height="18.9" Text="售票员：" HorzAlign="Right" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtSPY" Left="92.61" Top="85.05" Width="141.75" Height="18.9" Text="主售票员" Font="微软雅黑, 10pt"/>
+    </PageHeaderBand>
+  </ReportPage>
+</Report>

@@ -1,0 +1,72 @@
+﻿<Border x:Class="tktclient.Controls.SearchTextbox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:tktclient.Controls"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:input="clr-namespace:System.Windows.Input;assembly=PresentationCore"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        x:Name="main" Background="White" CornerRadius="2" BorderBrush="{StaticResource MainBorderBrush}"
+        BorderThickness="0">
+    <FrameworkElement.Resources>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="FrameworkElement.Margin" Value="0"/>
+            <Setter Property="Control.Foreground" Value="{StaticResource MainGrayForeground}"/>
+        </Style>
+    </FrameworkElement.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="tbTxt" Padding="5 0 0 0" Grid.Column="0" BorderThickness="0"
+             VerticalContentAlignment="Center" Background="Transparent"
+             Foreground="{StaticResource MainGrayForeground}"
+             FontSize="{Binding ElementName=main, Path=SearchFontSize}"
+             Text="{Binding ElementName=main, Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+             input:InputMethod.IsInputMethodEnabled="{Binding ElementName=main, Path=InputMethodEnable}">
+            <UIElement.InputBindings>
+                <input:KeyBinding Key="Enter" Command="{Binding ElementName=main, Path=InputEnterCommand}"/>
+            </UIElement.InputBindings>
+        </TextBox>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" Margin="0 0 3 0" Grid.Column="1">
+            <Button Click="BtnDel_Click" x:Name="btnDel" Grid.Column="1" ToolTip="删除"
+              Foreground="{StaticResource MainStaticForeground}" Tag="" FontSize="16"
+              Style="{DynamicResource MainIconButtonStyle}" HorizontalAlignment="Right"
+              VerticalAlignment="Stretch" Opacity="0" Margin="1 4 1 3"
+              Visibility="{Binding ElementName=main, Path=SearchDelVisible, Converter={StaticResource bvc}}"
+              Width="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}"
+              Command="{Binding ElementName=main, Path=SearchCommand}"/>
+            <Button Click="btn_Click" x:Name="btn" Grid.Column="1" ToolTip="搜索"
+              Foreground="{StaticResource MainStaticForeground}" Tag="" FontSize="20"
+              Style="{DynamicResource MainIconButtonStyle}" HorizontalAlignment="Right"
+              VerticalAlignment="Stretch" Margin="0 3 0 3"
+              Visibility="{Binding ElementName=main, Path=SearchVisible, Converter={StaticResource bvc}}"
+              Width="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}"
+              Command="{Binding ElementName=main, Path=SearchCommand}"/>
+        </StackPanel>
+        <FrameworkElement.Triggers>
+            <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <EventTrigger.Actions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.1" Storyboard.TargetName="btnDel" Storyboard.TargetProperty="Opacity" From="0"
+                               To="1"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger.Actions>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="Mouse.MouseLeave">
+                <EventTrigger.Actions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.1" Storyboard.TargetName="btnDel" Storyboard.TargetProperty="Opacity" From="1"
+                               To="0"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </FrameworkElement.Triggers>
+    </Grid>
+</Border>

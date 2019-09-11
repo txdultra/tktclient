@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="04/01/2014 11:31:20" ReportInfo.Modified="03/26/2017 11:04:25" ReportInfo.CreatorVersion="2013.2.5.0">
+  <Dictionary/>
+  <ReportPage Name="Page1" PaperWidth="80" PaperHeight="202" LeftMargin="0" TopMargin="0" RightMargin="0" BottomMargin="0" FirstPageSource="256" OtherPagesSource="256">
+    <PageHeaderBand Name="PageHeader1" Width="302.4" Height="793.8" Guides="66.15,66.15,47.25,47.25">
+      <TextObject Name="txtBarCode" Left="56.7" Top="18.9" Width="37.8" Height="141.75" Text="ET2222332556525" HorzAlign="Center" Angle="90" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text2" Left="85.05" Top="236.25" Width="28.35" Height="75.6" Text="入场时间：" HorzAlign="Right" Angle="90" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtEntranceTime" Left="94.5" Top="311.85" Width="18.9" Height="141.75" Text="2017-03-24 18:00" Angle="90" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text7" Left="122.85" Top="264.6" Width="28.35" Height="47.25" Text="场馆：" HorzAlign="Right" Angle="90" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtLocationName" Left="122.85" Top="311.85" Width="28.35" Height="122.85" Text="一号厅" Angle="90" Font="微软雅黑, 10pt, style=Bold"/>
+      <PictureObject Name="picBarCode" Left="122.85" Top="47.25" Width="85.05" Height="85.05"/>
+      <TextObject Name="txtProgramName" Left="226.8" Top="236.25" Width="47.25" Height="179.55" Text="桃花朵朵开" HorzAlign="Center" Angle="90" Font="微软雅黑, 16pt, style=Bold"/>
+      <TextObject Name="Text9" Left="103.95" Top="264.6" Width="28.35" Height="47.25" Text="座位：" HorzAlign="Right" Angle="90" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtSeatName" Left="103.95" Top="311.85" Width="28.35" Height="122.85" Text="1排24座" Angle="90" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtSessionName" Left="207.9" Width="37.8" Height="179.55" Text="第一场" HorzAlign="Center" Angle="90" Font="微软雅黑, 15.75pt"/>
+      <TextObject Name="Text10" Left="75.6" Top="-18.9" Width="37.8" Height="236.25" Text="防伪条码，涂损、折损后无效" HorzAlign="Center" Angle="90" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtBarCode1" Left="66.15" Top="585.9" Width="37.8" Height="85.05" Text="ET1234567890" HorzAlign="Center" Angle="90" Font="微软雅黑, 8pt"/>
+      <TextObject Name="txtBarCode2" Left="66.15" Top="680.4" Width="37.8" Height="85.05" Text="ET1234567890" HorzAlign="Center" Angle="90" Font="微软雅黑, 8pt"/>
+      <TextObject Name="txtLocationName1" Left="122.85" Top="585.9" Width="75.6" Height="85.05" Text="1800㎡演播厅" HorzAlign="Center" Angle="90" Font="微软雅黑, 14pt, style=Bold"/>
+      <TextObject Name="txtLocationName2" Left="122.85" Top="680.4" Width="75.6" Height="85.05" Text="1800㎡演播厅" HorzAlign="Center" Angle="90" Font="微软雅黑, 14pt, style=Bold"/>
+      <TextObject Name="Text13" Left="66.15" Top="236.25" Width="28.35" Height="75.6" Text="节目时间：" HorzAlign="Right" Angle="90" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtProgramRangeTime" Left="75.6" Top="311.85" Width="18.9" Height="122.85" Text="2017-03-24 18:00" Angle="90" Font="微软雅黑, 10pt"/>
+    </PageHeaderBand>
+  </ReportPage>
+</Report>

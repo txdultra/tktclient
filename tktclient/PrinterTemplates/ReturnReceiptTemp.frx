@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" TextQuality="ClearType" ReportInfo.Created="2016-12-31" ReportInfo.Modified="12/31/2016 10:33:26" ReportInfo.CreatorVersion="2013.2.5.0">
+  <Dictionary/>
+  <ReportPage Name="Page1" PaperWidth="58" PaperHeight="140" LeftMargin="0" TopMargin="0" RightMargin="0" BottomMargin="0" FirstPageSource="256" OtherPagesSource="256">
+    <PageHeaderBand Name="PageHeader1" Width="219.24" Height="604.8">
+      <TextObject Name="Text4" Left="-9.45" Top="37.8" Width="255.15" Height="18.9" Text="连环通退余额详情" HorzAlign="Center" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtAccName" Left="75.6" Top="94.5" Width="160.65" Height="18.9" Text="王孝天" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtReceiptTitle" Left="18.9" Top="9.45" Width="198.45" Height="18.9" Text="两江影视城" Padding="0, 0, 0, 0" HorzAlign="Center" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text6" Left="9.45" Top="94.5" Width="66.15" Height="18.9" Text="账户名：" HorzAlign="Right" Font="微软雅黑, 10pt"/>
+      <PictureObject Name="picBarCode" Left="56.7" Top="444.15" Width="103.95" Height="103.95"/>
+      <TextObject Name="Text10" Left="18.9" Top="406.35" Width="189" Height="18.9" Text="扫描下方二维码在线充值" HorzAlign="Center" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text11" Left="18.9" Top="387.45" Width="189" Height="18.9" Text="感谢您的光临" HorzAlign="Center" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtTradeNo" Left="75.6" Top="66.15" Width="160.65" Height="18.9" Text="201609031234123456" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text13" Left="9.45" Top="66.15" Width="66.15" Height="18.9" Text="交易号：" HorzAlign="Right" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtTicketStatus" Left="75.6" Top="349.65" Width="170.1" Height="18.9" Text="正常" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text15" Left="-9.45" Top="349.65" Width="85.05" Height="18.9" Text="门票状态：" HorzAlign="Right" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text1" Left="-9.45" Top="151.2" Width="85.05" Height="18.9" Text="充值金额：" HorzAlign="Right" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtTradeAmount" Left="75.6" Top="151.2" Width="141.75" Height="18.9" Text="0元" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text3" Left="-9.45" Top="264.6" Width="85.05" Height="18.9" Text="充值人：" HorzAlign="Right" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text5" Left="9.45" Top="122.85" Width="66.15" Height="18.9" Text="证件号：" HorzAlign="Right" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtOperator" Left="73.71" Top="264.6" Width="141.75" Height="18.9" Text="1001" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtAccNumber" Left="73.71" Top="122.85" Width="170.1" Height="18.9" Text="3412261990****3850" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text2" Left="-9.45" Top="321.3" Width="85.05" Height="18.9" Text="有效期至：" HorzAlign="Right" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtInvalidDate" Left="75.6" Top="321.3" Width="141.75" Height="18.9" Text="2019-12-03" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text7" Left="-18.9" Top="207.9" Width="94.5" Height="18.9" Text="账户余额：" HorzAlign="Right" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtAfterBalance" Left="75.6" Top="207.9" Width="141.75" Height="18.9" Text="260元" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtOperatorTime" Left="75.6" Top="292.95" Width="170.1" Height="18.9" Text="2014-05-14 16:15:23" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text9" Left="-9.45" Top="292.95" Width="85.05" Height="18.9" Text="充值时间：" HorzAlign="Right" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtKeepAmount" Left="75.6" Top="179.55" Width="170.1" Height="18.9" Text="￥20" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text17" Left="-9.45" Top="179.55" Width="85.05" Height="18.9" Text="押金：" HorzAlign="Right" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text18" Left="-18.9" Top="236.25" Width="94.5" Height="18.9" Text="可用余额：" HorzAlign="Right" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtConsumable" Left="75.6" Top="236.25" Width="141.75" Height="18.9" Text="260元" Font="微软雅黑, 10pt"/>
+    </PageHeaderBand>
+  </ReportPage>
+</Report>

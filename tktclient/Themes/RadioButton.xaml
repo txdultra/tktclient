@@ -1,0 +1,157 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:tktclient">
+    <SolidColorBrush x:Key="RadioButton.Static.Background" Color="#292e47"/>
+    <SolidColorBrush x:Key="RadioButton.Selected.Background" Color="#21253d"/>
+    <SolidColorBrush x:Key="RadioButton.Static.Foreground" Color="#bdbdc3"/>
+    <SolidColorBrush x:Key="RadioButton.Selected.Foreground" Color="White"/>
+    <SolidColorBrush x:Key="RadioButton.Static.Border.Background" Color="#2fa8fa"/>
+    <Style x:Key="MainRadioButtonStyle" TargetType="{x:Type RadioButton}">
+        <Setter Property="FrameworkElement.HorizontalAlignment" Value="Center"/>
+        <Setter Property="FrameworkElement.VerticalAlignment" Value="Center"/>
+        <Setter Property="Control.Foreground" Value="{StaticResource RadioButton.Static.Foreground}"/>
+        <Setter Property="FrameworkElement.Height" Value="77"/>
+        <Setter Property="FrameworkElement.Width" Value="90"/>
+        <Setter Property="Control.FontSize" Value="20"/>
+        <Setter Property="FrameworkElement.Cursor" Value="Hand"/>
+        <Setter Property="UIElement.Focusable" Value="false"/>
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid x:Name="grid" Background="{StaticResource RadioButton.Static.Background}"
+                Width="{TemplateBinding FrameworkElement.Width}" Height="{TemplateBinding FrameworkElement.Height}">
+                        <Border x:Name="border" HorizontalAlignment="Left" Width="3"
+                    Background="{StaticResource RadioButton.Static.Border.Background}" Visibility="Hidden"/>
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock x:Name="tbTag" Width="{TemplateBinding Control.FontSize}"
+                         Height="{TemplateBinding Control.FontSize}" FontSize="{TemplateBinding Control.FontSize}"
+                         Foreground="{TemplateBinding Control.Foreground}" Text="{TemplateBinding FrameworkElement.Tag}"
+                         Style="{DynamicResource WPIconFont}"/>
+                            <TextBlock x:Name="tbContent" Foreground="{TemplateBinding Control.Foreground}" FontSize="12"
+                         Text="{TemplateBinding ContentControl.Content}" Margin="0 8 0 0"/>
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UIElement.IsMouseOver" Value="true">
+                            <Setter TargetName="border" Property="UIElement.Visibility" Value="Visible"/>
+                            <Setter TargetName="grid" Value="{StaticResource RadioButton.Selected.Background}"
+                      Property="Panel.Background"/>
+                            <Setter TargetName="tbTag" Value="{StaticResource RadioButton.Selected.Foreground}"
+                      Property="TextBlock.Foreground"/>
+                            <Setter TargetName="tbContent" Value="{StaticResource RadioButton.Selected.Foreground}"
+                      Property="TextBlock.Foreground"/>
+                        </Trigger>
+                        <Trigger Property="ToggleButton.IsChecked" Value="true">
+                            <Setter TargetName="border" Property="UIElement.Visibility" Value="Visible"/>
+                            <Setter TargetName="grid" Value="{StaticResource RadioButton.Selected.Background}"
+                      Property="Panel.Background"/>
+                            <Setter TargetName="tbTag" Value="{StaticResource RadioButton.Selected.Foreground}"
+                      Property="TextBlock.Foreground"/>
+                            <Setter TargetName="tbContent" Value="{StaticResource RadioButton.Selected.Foreground}"
+                      Property="TextBlock.Foreground"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <SolidColorBrush x:Key="MainLeftRadioButtonStyle.Static.Background" Color="#21253d"/>
+    <SolidColorBrush x:Key="MainLeftRadioButtonStyle.Pressed.Background" Color="#181d30"/>
+    <SolidColorBrush x:Key="MainLeftRadioButtonStyle.Static.Foreground" Color="#bdbdc3"/>
+    <Style x:Key="MainLeftRadioButtonStyle" TargetType="{x:Type RadioButton}">
+        <Setter Property="FrameworkElement.HorizontalAlignment" Value="Center"/>
+        <Setter Property="FrameworkElement.VerticalAlignment" Value="Center"/>
+        <Setter Property="Control.Foreground" Value="{StaticResource PosRadioButton.Static.Foreground}"/>
+        <Setter Property="FrameworkElement.Height" Value="45"/>
+        <Setter Property="FrameworkElement.Width" Value="260"/>
+        <Setter Property="Control.FontSize" Value="20"/>
+        <Setter Property="FrameworkElement.Cursor" Value="Hand"/>
+        <Setter Property="UIElement.Focusable" Value="false"/>
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid x:Name="grid" Background="{StaticResource MainLeftRadioButtonStyle.Static.Background}"
+                Width="{TemplateBinding FrameworkElement.Width}" Height="{TemplateBinding FrameworkElement.Height}">
+                        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock x:Name="tbTag" Width="{TemplateBinding Control.FontSize}"
+                         Height="{TemplateBinding Control.FontSize}" FontSize="{TemplateBinding Control.FontSize}"
+                         Foreground="{TemplateBinding Control.Foreground}" Text="{TemplateBinding FrameworkElement.Tag}"
+                         Style="{DynamicResource WPIconFont}" Margin="35 0 18 0 "/>
+                            <TextBlock x:Name="tbContent" Foreground="{StaticResource MainLeftRadioButtonStyle.Static.Foreground}"
+                         FontSize="12" Text="{TemplateBinding ContentControl.Content}" Margin="0 3 0 0"/>
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UIElement.IsMouseOver" Value="true">
+                            <Setter TargetName="grid" Value="{StaticResource MainLeftRadioButtonStyle.Pressed.Background}"
+                      Property="Panel.Background"/>
+                            <Setter TargetName="tbContent" Value="{StaticResource RadioButton.Selected.Foreground}"
+                      Property="TextBlock.Foreground"/>
+                        </Trigger>
+                        <Trigger Property="ToggleButton.IsChecked" Value="true">
+                            <Setter TargetName="grid" Value="{StaticResource MainLeftRadioButtonStyle.Pressed.Background}"
+                      Property="Panel.Background"/>
+                            <Setter TargetName="tbContent" Value="{StaticResource RadioButton.Selected.Foreground}"
+                      Property="TextBlock.Foreground"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <SolidColorBrush x:Key="PayRadioButtonStyle.Static.Background" Color="#dae4ec"/>
+    <SolidColorBrush x:Key="PayRadioButtonStyle.Static.Foreground" Color="#2b3340"/>
+    <SolidColorBrush x:Key="PayRadioButtonStyle.Selected.Foreground" Color="White"/>
+    <SolidColorBrush x:Key="PayRadioButtonStyle.Selected.Background" Color="#30a7fa"/>
+    <Style x:Key="PayRadioButtonStyle" TargetType="{x:Type RadioButton}">
+        <Setter Property="FrameworkElement.HorizontalAlignment" Value="Center"/>
+        <Setter Property="FrameworkElement.VerticalAlignment" Value="Center"/>
+        <Setter Property="Control.Foreground" Value="{StaticResource PayRadioButtonStyle.Static.Foreground}"/>
+        <Setter Property="FrameworkElement.Height" Value="50"/>
+        <Setter Property="FrameworkElement.Width" Value="150"/>
+        <Setter Property="Control.FontSize" Value="20"/>
+        <Setter Property="FrameworkElement.Cursor" Value="Hand"/>
+        <Setter Property="UIElement.Focusable" Value="true"/>
+        <Setter Property="Control.FontSize" Value="20"/>
+        <Setter Property="UIElement.Focusable" Value="false"/>
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid>
+                        <Border x:Name="border" CornerRadius="25 0 0 25"
+                    Background="{StaticResource PayRadioButtonStyle.Static.Background}"
+                    Width="{TemplateBinding FrameworkElement.Width}" Height="{TemplateBinding FrameworkElement.Height}">
+                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal" Margin="25 0 0 0">
+                                <TextBlock x:Name="tbTag" FontSize="{TemplateBinding Control.FontSize}"
+                           Width="{TemplateBinding Control.FontSize}" Height="{TemplateBinding Control.FontSize}"
+                           Foreground="{TemplateBinding Control.Foreground}" Text="{TemplateBinding FrameworkElement.Tag}"
+                           Style="{DynamicResource WPIconFont}" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="tbContent" Foreground="{TemplateBinding Control.Foreground}" FontSize="14"
+                           Text="{TemplateBinding ContentControl.Content}" VerticalAlignment="Center" Margin="10 0 0 0"
+                           TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UIElement.IsMouseOver" Value="true">
+                            <Setter TargetName="border" Value="{StaticResource PayRadioButtonStyle.Selected.Background}"
+                      Property="Border.Background"/>
+                            <Setter TargetName="tbTag" Value="{StaticResource PayRadioButtonStyle.Selected.Foreground}"
+                      Property="TextBlock.Foreground"/>
+                            <Setter TargetName="tbContent" Value="{StaticResource PayRadioButtonStyle.Selected.Foreground}"
+                      Property="TextBlock.Foreground"/>
+                        </Trigger>
+                        <Trigger Property="ToggleButton.IsChecked" Value="true">
+                            <Setter TargetName="border" Value="{StaticResource PayRadioButtonStyle.Selected.Background}"
+                      Property="Border.Background"/>
+                            <Setter TargetName="tbTag" Value="{StaticResource PayRadioButtonStyle.Selected.Foreground}"
+                      Property="TextBlock.Foreground"/>
+                            <Setter TargetName="tbContent" Value="{StaticResource PayRadioButtonStyle.Selected.Foreground}"
+                      Property="TextBlock.Foreground"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

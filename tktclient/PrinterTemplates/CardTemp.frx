@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="04/01/2014 11:31:20" ReportInfo.Modified="12/21/2018 15:09:09" ReportInfo.CreatorVersion="2013.2.5.0">
+  <Dictionary/>
+  <ReportPage Name="Page1" PaperWidth="54" PaperHeight="85" LeftMargin="0" TopMargin="0" RightMargin="0" BottomMargin="0" FirstPageSource="256" OtherPagesSource="256">
+    <PageHeaderBand Name="PageHeader1" Width="204.12" Height="321.3">
+      <PictureObject Name="picHeader" Left="18.9" Top="211.68" Width="132.3" Height="96.39" Angle="270"/>
+      <TextObject Name="Text1" Left="170.1" Top="160.65" Width="18.9" Height="56.7" Text="有效期：&#13;&#10;" Angle="270" Font="宋体, 9pt"/>
+      <TextObject Name="txtTime" Left="170.1" Width="18.9" Height="170.1" Angle="270" Font="宋体, 9pt"/>
+      <TextObject Name="txtName" Left="170.1" Top="217.35" Width="18.9" Height="75.6" Angle="270" Font="宋体, 9pt"/>
+    </PageHeaderBand>
+  </ReportPage>
+</Report>
