@@ -50,5 +50,8 @@ namespace tktclient.Db
 
         [Column("use_date")]
         public int UseDate { get; set; }
+
+        [Column("use_time")]
+        public int UseTime { get; set; }
     }
 }

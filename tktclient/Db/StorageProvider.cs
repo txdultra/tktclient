@@ -25,6 +25,9 @@ namespace tktclient.Db
             provider = cfg.GetDbProvider();
             Dapper.SqlMapper.SetTypeMap(typeof(OrderEntity), new ColumnAttributeTypeMapper<OrderEntity>());
             Dapper.SqlMapper.SetTypeMap(typeof(ChildOrderEntity), new ColumnAttributeTypeMapper<ChildOrderEntity>());
+            Dapper.SqlMapper.SetTypeMap(typeof(PrinterSetting), new ColumnAttributeTypeMapper<PrinterSetting>());
+            Dapper.SqlMapper.SetTypeMap(typeof(PrinterLog), new ColumnAttributeTypeMapper<PrinterLog>());
+            Dapper.SqlMapper.SetTypeMap(typeof(TktPrint), new ColumnAttributeTypeMapper<TktPrint>());
             connectionString = ResolveConnectionString(cfg.DbConnectionString());
         }
 
@@ -64,8 +67,8 @@ namespace tktclient.Db
             using (IDbConnection conn = GetConnection())
             {
                 conn.Open();
-                var sql = "insert into orders(cloud_id,order_no,nums,order_type,amount,per_nums,create_time,state,pay_type,real_pay,change_pay,should_pay,excode,excode_sync,remark,ext1,ext2,ext3)" +
-                          " values(@CloudId,@OrderNo,@Nums,@OrderType,@Amount,@PerNums,@CreateTime,@State,@PayType,@RealPay,@ChangePay,@ShouldPay,@ExCode,@ExCodeSync,@Remark,@Ext1,@Ext2,@Ext3);" +
+                var sql = "insert into orders(cloud_id,order_no,nums,order_type,amount,per_nums,create_time,state,pay_type,real_pay,change_pay,should_pay,excode,excode_sync,remark,client_no,ext1,ext2,ext3)" +
+                          " values(@CloudId,@OrderNo,@Nums,@OrderType,@Amount,@PerNums,@CreateTime,@State,@PayType,@RealPay,@ChangePay,@ShouldPay,@ExCode,@ExCodeSync,@Remark,@ClientNo,@Ext1,@Ext2,@Ext3);" +
                           "select last_insert_id();";
                 var result = await conn.ExecuteScalarAsync<int>(sql, order);
                 if (result > 0)
@@ -83,7 +86,7 @@ namespace tktclient.Db
             {
                 conn.Open();
                 var sql = "update orders set cloud_id=@CloudId, order_no=@OrderNo,nums=@Nums,order_type=@OrderType,amount=@Amount,per_nums=@PerNums,create_time=@CreateTime," +
-                    "state=@State,pay_type=@PayType,real_pay=@RealPay,change_pay=@ChangePay,should_pay=@ShouldPay,excode=@ExCode,excode_sync=@ExCodeSync,remark=@Remark,ext1=@Ext1,ext2=@Ext2,ext3=@Ext3" +
+                    "state=@State,pay_type=@PayType,real_pay=@RealPay,change_pay=@ChangePay,should_pay=@ShouldPay,excode=@ExCode,excode_sync=@ExCodeSync,remark=@Remark,client_no=@ClientNo,ext1=@Ext1,ext2=@Ext2,ext3=@Ext3" +
                     " where id=@Id";
                 var result = await conn.ExecuteAsync(sql, order);
                 if (result > 0)
@@ -249,6 +252,67 @@ namespace tktclient.Db
                 var sql =
                     "select * from tkt_prints where id=" + id;
                 return await conn.QueryFirstOrDefaultAsync<TktPrint>(sql);
+            }
+        }
+
+        public static async Task<bool> SetRemainTickets(string printerNo,int nums)
+        {
+            using (IDbConnection conn = GetConnection())
+            {
+                conn.Open();
+                var sql =
+                    "update printers set remain_tkts="+ nums + " where no='" + printerNo + "'";
+                var result = await conn.ExecuteAsync(sql);
+                if (result > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public static async Task<bool> SetRemainRibbons(string printerNo, int nums)
+        {
+            using (IDbConnection conn = GetConnection())
+            {
+                conn.Open();
+                var sql =
+                    "update printers set remain_rbns=" + nums + " where no='" + printerNo + "'";
+                var result = await conn.ExecuteAsync(sql);
+                if (result > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public static async Task<PrinterSetting> GetPrinterSetting(string no)
+        {
+            using (IDbConnection conn = GetConnection())
+            {
+                conn.Open();
+                var sql =
+                    "select * from printers where no='" + no + "'";
+                return await conn.QueryFirstOrDefaultAsync<PrinterSetting>(sql);
+            }
+        }
+
+        public static async Task<bool> SavePrinterLog(PrinterLog log)
+        {
+            using (IDbConnection conn = GetConnection())
+            {
+                conn.Open();
+                var sql = "insert into printers_log(printer_no,reset_time,remain_tkts,remain_rbns)" +
+                          " values(@PrinterNo,@ResetTime,@RemainTickets,@RemianRibbons);" +
+                          "select last_insert_id();";
+                var result = await conn.ExecuteScalarAsync<int>(sql, log);
+                if (result > 0)
+                {
+                    log.Id = result;
+                    return true;
+                }
+                return false;
             }
         }
     }

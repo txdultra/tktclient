@@ -29,6 +29,14 @@ namespace tktclient.ViewModel
         private ICommand _settleCommand;
         private OrderEntity order;
         private string _remark = "";
+        private int _remainTicket;
+        private int _remainRibbons;
+
+        public TicketSaleViewModel()
+        {
+            this._remainTicket = ClientContext.RemainTickets;
+            this._remainRibbons = ClientContext.RemainRibbons;
+        }
 
         public ObservableCollection<TicketModel> CurrentTickets
         {
@@ -108,6 +116,33 @@ namespace tktclient.ViewModel
                 this.RaisePropertyChanged(nameof(_remark));
             }
         }
+
+        public int RemainTicket
+        {
+            get
+            {
+                return this._remainTicket;
+            }
+            set
+            {
+                this.Set<int>(ref this._remainTicket, value, false, nameof(RemainTicket));
+                ClientContext.RemainTickets = value;
+            }
+        }
+
+        public int RemainRibbons
+        {
+            get
+            {
+                return this._remainRibbons;
+            }
+            set
+            {
+                this.Set<int>(ref this._remainRibbons, value, false, nameof(RemainRibbons));
+                ClientContext.RemainRibbons = value;
+            }
+        }
+
 
         public async void LoadTickets()
         {
@@ -371,6 +406,7 @@ namespace tktclient.ViewModel
             order.CreateTime = DateTime.Now;
             order.State = (int) OrderStates.未支付;
             order.PayType = (int)PayTypes.现金;
+            order.ClientNo = ClientContext.CurrentUser.SerialNo;
             var ok = await Db.StorageProvider.SaveOrder(order);
             if (ok)
             {
@@ -403,7 +439,14 @@ namespace tktclient.ViewModel
                 ticketSaleViewModel.IsBusy = true;
                 ticketSaleViewModel.BusyContent = "正在出票...";
 
-                var result = Printer.Print(this.order);
+                var result = Printer.Print(this.order, (childId, seq, success) =>
+                {
+                    if (success)
+                    {
+                        this.RemainTicket--;
+                        this.RemainRibbons--;
+                    }
+                });
                 if (!result.Result)
                 {
                     ticketSaleViewModel.ErrorMessage = "出票失败:打印失败。";

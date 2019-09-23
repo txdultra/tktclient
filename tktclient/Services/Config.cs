@@ -28,6 +28,10 @@ namespace tktclient.Services
         {
             return data["TktService"][name];
         }
+        public static string GetTktClientNo()
+        {
+            return data["TktService"]["TktClientNo"];
+        }
 
         public string GetPrinterTemplateFileName()
         {
@@ -37,6 +41,21 @@ namespace tktclient.Services
         public string GetPrintName()
         {
             return data["Print"]["PrintName"];
+        }
+
+        public string GetPrinterNo()
+        {
+            return data["Print"]["No"];
+        }
+
+        public int GetInitPrinterTickets()
+        {
+            return int.Parse(data["Print"]["Tickets"]);
+        }
+
+        public int GetInitPrinterRibbons()
+        {
+            return int.Parse(data["Print"]["Ribbons"]);
         }
 
 
@@ -60,5 +79,7 @@ namespace tktclient.Services
         {
             return data["Db"]["Connection"];
         }
+
+       
     }
 }

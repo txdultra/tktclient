@@ -18,6 +18,7 @@
                 <ResourceDictionary Source="Themes/IconButton.xaml"/>
                 <ResourceDictionary Source="Themes/Controls.xaml"/>
                 <ResourceDictionary Source="Themes/Button.xaml"/>
+                <ResourceDictionary Source="Themes/TabControl.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:tktclient.ViewModel" />
             <viewModel:ViewModelLocator x:Key="SaleLocator"/>

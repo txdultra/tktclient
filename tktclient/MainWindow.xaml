@@ -28,7 +28,7 @@
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Orientation="Horizontal" Width="90"
                   Height="40">
                 <Button Name="btnNet" ToolTip="网络正常" Foreground="Green" Tag="" Width="45" Height="40" FontSize="20" Style="{DynamicResource TagForegroundBtnStyle}"/>
-                <Button ToolTip="设置" Foreground="#bdbdc3" Tag="" Width="45" Height="40" FontSize="20" Style="{DynamicResource SettingsTagButtonStyle}"/>
+                <Button Click="BtnSet_Click" ToolTip="设置" Foreground="#bdbdc3" Tag="" Width="45" Height="40" FontSize="20" Style="{DynamicResource SettingsTagButtonStyle}"/>
             </StackPanel>
         </Grid>
         <Grid Column="1">

@@ -230,5 +230,13 @@ namespace tktclient
             }
             return str;
         }
+
+        private void BtnSet_Click(object sender, RoutedEventArgs e)
+        {
+            var settingWin = new SettingWin();
+            settingWin.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            settingWin.Owner = (Window)this;
+            NavigationServiceHelper.ShowOwnerWin((Window)settingWin, true);
+        }
     }
 }

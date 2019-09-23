@@ -1,0 +1,115 @@
+﻿<Window x:Class="tktclient.SettingWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="true"
+        ResizeMode="NoResize" Title="系统设置" Height="500" Width="770"
+        xmlns:local="clr-namespace:tktclient.Controls"
+        Style="{StaticResource ForNoresizeWindow}"
+        DataContext="{Binding Path=SetView, Source={StaticResource Locator}}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <TextBlock Text="系统设置" Foreground="{StaticResource MainGrayForeground}" HorizontalAlignment="Left"
+                 VerticalAlignment="Center" FontSize="14" Margin="15 0 0 0"/>
+            <Button ToolTip="关闭" Click="btnClose_Click" Foreground="#a9a9a9" Tag="" Width="30" Height="30"
+              FontSize="18" HorizontalAlignment="Right" VerticalAlignment="Top"
+              Style="{DynamicResource CloseTagButtonStyle}"/>
+            <Border Height="1" VerticalAlignment="Bottom" Background="{StaticResource MainBorderBrush}"/>
+        </Grid>
+        <Grid Row="1" Background="Transparent">
+            <TabControl Name="tcControl" SelectedIndex="0" Background="#f5f5f5" TabStripPlacement="Left"
+                  BorderThickness="0" Margin="30 0 0 0">
+                <FrameworkElement.Resources>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="TextBlock.Foreground" Value="{StaticResource MainGrayForeground}"/>
+                        <Setter Property="TextBlock.TextAlignment" Value="Right"/>
+                        <Setter Property="FrameworkElement.HorizontalAlignment" Value="Left"/>
+                        <Setter Property="FrameworkElement.VerticalAlignment" Value="Center"/>
+                        <Setter Property="TextBlock.FontSize" Value="14"/>
+                    </Style>
+                    <Style TargetType="{x:Type ComboBox}">
+                        <Setter Property="Control.Foreground" Value="{StaticResource MainGrayForeground}"/>
+                        <Setter Property="Control.FontSize" Value="12"/>
+                        <Setter Property="Control.VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="FrameworkElement.Width" Value="250"/>
+                        <Setter Property="Control.BorderThickness" Value="0"/>
+                    </Style>
+                    <Style TargetType="{x:Type CheckBox}">
+                        <Setter Property="FrameworkElement.Cursor" Value="Hand"/>
+                    </Style>
+                    <Style TargetType="{x:Type RadioButton}">
+                        <Setter Property="FrameworkElement.Cursor" Value="Hand"/>
+                    </Style>
+                </FrameworkElement.Resources>
+                <TabItem Width="130" Style="{StaticResource TabItemStyle}" Header="机内票数" HorizontalAlignment="Right"
+                 Foreground="{StaticResource MainGrayForeground}">
+                    <Grid Background="White">
+                        <StackPanel Margin="55 10 0 0">
+                            <TextBlock Text="机内票数"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 10 0 15">
+                                <TextBlock Text="当前剩余：" Margin="0 0 5 0"/>
+                                <TextBlock Margin="0 0 5 0" MinWidth="35" TextAlignment="Center" Text="{Binding TicketsNumInPrinter}"/>
+                                <TextBlock Text="/" Margin="0 0 5 0"/>
+                                <TextBlock Margin="0 0 20 0" MinWidth="50" TextAlignment="Center"
+                           Text="{Binding InitTicketsNumInPrinter, StringFormat={}{0}张}"/>
+                                <local:NumericUpDown Width="100" Value="{Binding TicketsNumInPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        MaxNum="{Binding InitTicketsNumInPrinter}"/>
+                                <TextBlock Text="总数量：" Margin="30 0 5 0"/>
+                                <local:NumericUpDown Width="100"
+                                        Value="{Binding InitTicketsNumInPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        MinNum="{Binding TicketsNumInPrinter}"/>
+                            </StackPanel>
+                            <StackPanel Margin="0 20 0 0">
+                                <TextBlock Text="碳带余票"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 10 0 15">
+                                    <TextBlock Text="当前剩余：" Margin="0 0 5 0"/>
+                                    <TextBlock Margin="0 0 5 0" MinWidth="35" TextAlignment="Center" Text="{Binding RibbonsNumInPrinter}"/>
+                                    <TextBlock Text="/" Margin="0 0 5 0"/>
+                                    <TextBlock Margin="0 0 20 0" MinWidth="50" TextAlignment="Center"
+                             Text="{Binding InitRibbonsNumInPrinter, StringFormat={}{0}张}"/>
+                                    <local:NumericUpDown Width="100" Value="{Binding RibbonsNumInPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          MaxNum="{Binding InitRibbonsNumInPrinter}"/>
+                                    <TextBlock Text="总数量：" Margin="30 0 5 0"/>
+                                    <local:NumericUpDown Width="100"
+                                          Value="{Binding InitRibbonsNumInPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          MinNum="{Binding RibbonsNumInPrinter}"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Margin="0 20 0 0">
+                                <TextBlock Text="重置票数和碳带"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 10 0 15">
+                                    <Button Click="btnResetPrinter_Click" Content="重置" Width="75" Height="33" FontSize="12" Margin="20 0 0 0"
+                                            BorderThickness="0" Background="{DynamicResource MainBlueColor}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+        <Grid Row="2" Background="{DynamicResource MainSideBackground}">
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20 0 0 0" Orientation="Horizontal">
+                <FrameworkElement.Resources>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="TextBlock.Foreground" Value="{StaticResource MainGrayForeground}"/>
+                        <Setter Property="TextBlock.FontSize" Value="12"/>
+                    </Style>
+                </FrameworkElement.Resources>
+                <TextBlock Text="当前版本：V "/>
+                <TextBlock Name="tbVersionInfo" Text=""/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 20 0">
+                <Button Click="btnCancel_Click" Content="取消" Width="75" Height="33" FontSize="12" Foreground="#6f7d93"
+                Margin="0 0 0 0" BorderThickness="0" Background="{DynamicResource MainGrayColor}"
+                />
+                <Button Click="btnOk_Click" Content="确认" Width="75" Height="33" FontSize="12" Margin="20 0 0 0"
+                BorderThickness="0" Background="{DynamicResource MainBlueColor}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

@@ -172,6 +172,8 @@
     <Compile Include="Infrastructure\BarcodePayTypes.cs" />
     <Compile Include="Infrastructure\OrderStates.cs" />
     <Compile Include="Infrastructure\PayTypes.cs" />
+    <Compile Include="Infrastructure\PrinterLog.cs" />
+    <Compile Include="Infrastructure\PrinterSetting.cs" />
     <Compile Include="Infrastructure\TicketCodeStates.cs" />
     <Compile Include="Infrastructure\TktPrint.cs" />
     <Compile Include="Login.xaml.cs">
@@ -195,6 +197,9 @@
     <Compile Include="Services\TicketDto.cs" />
     <Compile Include="Services\TicketSnapshotDto.cs" />
     <Compile Include="Services\TktService.cs" />
+    <Compile Include="SettingWin.xaml.cs">
+      <DependentUpon>SettingWin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TktExchange.xaml.cs">
       <DependentUpon>TktExchange.xaml</DependentUpon>
     </Compile>
@@ -213,6 +218,7 @@
     <Compile Include="ViewModel\B2BSaleViewModel.cs" />
     <Compile Include="ViewModel\BusyStatusViewModel.cs" />
     <Compile Include="ViewModel\ConfirmPayViewModel.cs" />
+    <Compile Include="ViewModel\SetViewModel.cs" />
     <Compile Include="ViewModel\TicketExchangeViewModel.cs" />
     <Compile Include="ViewModel\TicketSaleViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -250,6 +256,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -302,6 +312,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\RadioButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\TabControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

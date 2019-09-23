@@ -12,7 +12,7 @@ namespace tktclient.Utils
 {
     public class Printer
     { 
-        public static async Task<bool> Print(OrderEntity order)
+        public static async Task<bool> Print(OrderEntity order, Action<int,int,bool> everyTktPrintResultAction)
         {
             var printer = new TemplatePrinter();
             var cfg = new Config();
@@ -69,6 +69,8 @@ namespace tktclient.Utils
                         print.Printed = true;
                         print.PrintTime = DateTime.Now;
                         await Db.StorageProvider.UpdatePrint(print);
+
+                        everyTktPrintResultAction?.Invoke(stm.Id, i, true);
                     }
                     else
                     {
@@ -91,6 +93,43 @@ namespace tktclient.Utils
             }
 
             return true;
+        }
+
+        public static async Task ResetRemain(ResetRemainType rrt)
+        {
+            var cfg = new Config();
+            var pstting = await StorageProvider.GetPrinterSetting(cfg.GetPrinterNo());
+            if (pstting == null)
+            {
+                return;
+            }
+
+            var ok = false;
+            switch (rrt)
+            {
+                case ResetRemainType.纸质票:
+                    ok = await StorageProvider.SetRemainTickets(cfg.GetPrinterNo(), cfg.GetInitPrinterTickets());
+                    break;
+                case ResetRemainType.碳带:
+                    ok = await StorageProvider.SetRemainRibbons(cfg.GetPrinterNo(), cfg.GetInitPrinterRibbons());
+                    break;
+            }
+            
+            if (ok)
+            {
+                var log = new PrinterLog();
+                log.PrinterNo = pstting.No;
+                log.RemainTickets = pstting.RemainTickets;
+                log.RemainRibbons = pstting.RemainRibbons;
+                log.ResetTime = DateTime.Now;
+                await StorageProvider.SavePrinterLog(log);
+            }
+        }
+
+        public enum ResetRemainType
+        {
+            纸质票,
+            碳带
         }
     }
 }

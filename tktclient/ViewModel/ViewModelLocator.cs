@@ -47,6 +47,7 @@ namespace tktclient.ViewModel
             SimpleIoc.Default.Register<ConfirmPayViewModel>();
             SimpleIoc.Default.Register<TicketExchangeViewModel>();
             SimpleIoc.Default.Register<B2BSaleViewModel>();
+            SimpleIoc.Default.Register<SetViewModel>();
         }
 
         public MainViewModel Main
@@ -85,6 +86,14 @@ namespace tktclient.ViewModel
             get
             {
                 return new B2BSaleViewModel();
+            }
+        }
+
+        public SetViewModel SetView
+        {
+            get
+            {
+                return new SetViewModel();
             }
         }
 

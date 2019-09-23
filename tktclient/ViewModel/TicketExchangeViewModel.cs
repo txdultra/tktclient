@@ -30,6 +30,14 @@ namespace tktclient.ViewModel
         private ICommand _searchCommand;
         private ICommand _clearCommand;
         private ICommand _printCommand;
+        private int _remainTicket;
+        private int _remainRibbons;
+
+        public TicketExchangeViewModel()
+        {
+            this._remainTicket = ClientContext.RemainTickets;
+            this._remainRibbons = ClientContext.RemainRibbons;
+        }
 
         public ICommand SearchCommand
         {
@@ -135,6 +143,32 @@ namespace tktclient.ViewModel
             {
                 this._recondCount = value;
                 this.RaisePropertyChanged(nameof(RecordCount));
+            }
+        }
+
+        public int RemainTicket
+        {
+            get
+            {
+                return this._remainTicket;
+            }
+            set
+            {
+                this.Set<int>(ref this._remainTicket, value, false, nameof(RemainTicket));
+                ClientContext.RemainTickets = value;
+            }
+        }
+
+        public int RemainRibbons
+        {
+            get
+            {
+                return this._remainRibbons;
+            }
+            set
+            {
+                this.Set<int>(ref this._remainRibbons, value, false, nameof(RemainRibbons));
+                ClientContext.RemainRibbons = value;
             }
         }
 
@@ -255,7 +289,14 @@ namespace tktclient.ViewModel
                 ticketSaleViewModel.IsBusy = true;
                 ticketSaleViewModel.BusyContent = "正在出票...";
 
-                var result = await Printer.Print(order);
+                var result = await Printer.Print(order, (childId, seq, success) =>
+                {
+                    if (success)
+                    {
+                        this.RemainTicket--;
+                        this.RemainRibbons--;
+                    }
+                });
                 if (!result)
                 {
                     ticketSaleViewModel.ErrorMessage = "出票失败:打印失败。";
@@ -297,6 +338,7 @@ namespace tktclient.ViewModel
             order.Remark = this.Remark;
             order.ExCode = this._exCode;
             order.ExCodeSync = false;
+            order.ClientNo = ClientContext.CurrentUser.SerialNo;
             var ok = await Db.StorageProvider.SaveOrder(order);
             if (ok)
             {
@@ -373,6 +415,8 @@ namespace tktclient.ViewModel
                 return;
             this.OrderInfo = obj as OrderDto;
             this.SelectedSubOrders.Clear();
+            this.PrintQuantity = 0;
+            this.PerQuantity = 0;
             foreach (var subOrder in this.OrderInfo.SubOrders)
             {
                 var dbOrder = await StorageProvider.GetChildOrderByCloudId(subOrder.Id.ToString());

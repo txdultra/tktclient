@@ -55,6 +55,8 @@ namespace tktclient.Db
         [Column("excode_sync")]
         public bool ExCodeSync { get; set; }
 
+        [Column("client_no")] public string ClientNo { get; set; }
+
         [Column("ext1")]
         public string Ext1 { get; set; }
 
