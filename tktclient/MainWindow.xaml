@@ -6,8 +6,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:tktclient.Controls"
         Title="长甲集团" Style="{StaticResource ForNoresizeWindow}" Height="726" Width="1276"
-        WindowStartupLocation="CenterScreen"
-        DataContext="{Binding Path=Main, Source={StaticResource Locator}}">
+        WindowStartupLocation="CenterScreen" ShowInTaskbar="True"
+        DataContext="{Binding Path=Main, Source={StaticResource Locator}}" Icon="app_icon.ico">
     <Grid MouseLeftButtonDown="Grid_MouseLeftButtonDown">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="90"/>
@@ -22,6 +22,7 @@
                         <RadioButton Click="RBtnFunction_Click" Tag="" Content="散客售票" GroupName="Pages" CommandParameter="TicketSale" Style="{DynamicResource MainRadioButtonStyle}"/>
                         <RadioButton Click="RBtnFunction_Click" Tag="" Content="电商出票" GroupName="Pages" CommandParameter="TravelB2BOrdersPage" Style="{DynamicResource MainRadioButtonStyle}"/>
                         <RadioButton Click="RBtnFunction_Click" Tag="" Content="换票操作" GroupName="Pages" CommandParameter="TicketExchange" Style="{DynamicResource MainRadioButtonStyle}"/>
+                        <RadioButton Click="RBtnFunction_Click" Tag="" Content="团队票" GroupName="Pages" CommandParameter="TicketTeam" Style="{DynamicResource MainRadioButtonStyle}"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

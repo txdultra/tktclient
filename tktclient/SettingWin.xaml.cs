@@ -27,6 +27,7 @@ namespace tktclient
         {
             InitializeComponent();
             this._ViewModel = this.DataContext as SetViewModel;
+            this.tbVersionInfo.Text = Assemblies.AssemblyVersion();
         }
 
         private async void btnResetPrinter_Click(object sender, RoutedEventArgs e)

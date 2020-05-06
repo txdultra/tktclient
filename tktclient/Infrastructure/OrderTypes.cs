@@ -10,6 +10,7 @@ namespace tktclient.Infrastructure
     {
         门市 = 1,
         换票 = 2,
-        电商换票 = 3
+        电商换票 = 3,
+        团票 = 4
     }
 }

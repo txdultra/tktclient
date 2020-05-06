@@ -48,6 +48,8 @@ namespace tktclient.Services
         public String Name;
         [JsonProperty("price")]
         public double price;
+        [JsonProperty("original_price")]
+        public double? OriginalPrice;
         [JsonProperty("stocks")]
         public int Stocks;
         [JsonProperty("sold_count")]
@@ -65,6 +67,19 @@ namespace tktclient.Services
         [JsonProperty("description")]
         public String Description;
         [JsonProperty("extra")]
-        public dynamic extra;
+        public dynamic Extra;
+        [JsonProperty("use_date")]
+        public TicketUseDate UseDate;
+    }
+
+    public class TicketUseDate
+    {
+        [JsonProperty("id")]
+        public int Id;
+
+        [JsonProperty("name")] public string Name;
+
+        [JsonProperty("enter_time")]
+        public int? EnterTime;
     }
 }

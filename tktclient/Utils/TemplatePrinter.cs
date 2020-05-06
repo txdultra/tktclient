@@ -82,13 +82,13 @@ namespace printtest
                     ShowProgress = false
                 };
                 // ISSUE: explicit non-virtual call
-                if ((souceData != null ? souceData.Count : 0) > 0)
+                if ((souceData?.Count ?? 0) > 0)
                 {
                     report.MaxPages = 1;
                     ReportPage page = (ReportPage)report.Pages[0];
                     // ISSUE: explicit non-virtual call
-                    page.PaperHeight = (float)(100.0 + (souceData != null ? (double)souceData.Count : 0.0) * 12.5);
-                    report.Pages[0] = (PageBase)page;
+                    page.PaperHeight = (float)(100.0 + souceData.Count * 12.5);
+                    report.Pages[0] = page;
                 }
                 for (int index = 0; index < printCount; ++index)
                     report.Print();

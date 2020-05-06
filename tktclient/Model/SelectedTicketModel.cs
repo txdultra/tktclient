@@ -20,6 +20,8 @@ namespace tktclient.Model
 
         public int TicketId { get; set; }
 
+        public string EnterTime { get; set; }
+
         public string BarcodeTypeName { get; set; }
 
         public string TicketModelName { get; set; }
@@ -27,6 +29,8 @@ namespace tktclient.Model
         public string TicketKindName { get; set; }
 
         public int PerNumber { get; set; }
+
+        public double? OriginalPrice { get; set; }
 
         public Decimal RealPrice
         {

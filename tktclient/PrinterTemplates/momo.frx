@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="04/01/2014 11:31:20" ReportInfo.Modified="09/27/2019 09:50:41" ReportInfo.CreatorVersion="2013.2.5.0">
+  <Dictionary/>
+  <ReportPage Name="Page1" PaperWidth="54" PaperHeight="85.6" LeftMargin="0" TopMargin="0" RightMargin="0" BottomMargin="0" FirstPageSource="256" OtherPagesSource="256">
+    <PageHeaderBand Name="PageHeader1" Width="204.12" Height="323.57">
+      <TextObject Name="txtTotalMoney" Left="147.42" Top="103.95" Width="17.01" Height="122.85" Text="￥0元" Padding="0, 0, 0, 0" Angle="270" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtTradeNO" Left="173.88" Top="66.15" Width="18.9" Height="160.65" Text="ET2222332556525" Padding="0, 0, 0, 0" Angle="270" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtTicketModelInfo" Left="111.51" Top="28.35" Width="18.9" Height="198.45" Text="亲子套票" Padding="0, 0, 0, 0" Angle="270" Font="微软雅黑, 10pt"/>
+      <TextObject Name="txtInvalidDate" Left="147.42" Top="28.35" Width="17.01" Height="75.6" Text="15/10/10" Padding="0, 0, 0, 0" Angle="270" Font="微软雅黑, 10pt"/>
+      <PictureObject Name="picBarCode" Left="113.4" Top="236.25" Width="79.38" Height="79.38"/>
+      <TextObject Name="txtSubId" Left="177.66" Top="9.45" Width="11.34" Height="56.7" Angle="270" Font="宋体, 6.75pt"/>
+    </PageHeaderBand>
+  </ReportPage>
+</Report>

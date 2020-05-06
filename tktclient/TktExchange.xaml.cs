@@ -20,14 +20,14 @@ namespace tktclient
     /// <summary>
     /// TktExchange.xaml 的交互逻辑
     /// </summary>
-    public partial class TktExchange : Page
+    public partial class TktExchange : Page, ITktControlReviewLoad
     {
-        private TicketExchangeViewModel _ViewModel;
+        private TicketExchangeViewModel _viewModel;
 
         public TktExchange()
         {
             InitializeComponent();
-            this._ViewModel = this.DataContext as TicketExchangeViewModel;
+            this._viewModel = this.DataContext as TicketExchangeViewModel;
             Messenger.Default.Register<NotificationMessage>((object)this, m =>
             {
                 if (m.Notification != "OrderInfoChange")
@@ -46,7 +46,11 @@ namespace tktclient
 
         private void TicketOperateButton_Click(object sender, RoutedEventArgs e)
         {
-            this._ViewModel.OrderSelected((sender as RadioButton)?.CommandParameter);
+            this._viewModel.OrderSelected((sender as RadioButton)?.CommandParameter);
+        }
+        public void ReviewLoad()
+        {
+            (this._viewModel as ITktControlReviewLoad).ReviewLoad();
         }
     }
 }

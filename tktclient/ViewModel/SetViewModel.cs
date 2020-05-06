@@ -80,14 +80,15 @@ namespace tktclient.ViewModel
 
         public async Task Save()
         {
-            await StorageProvider.SetRemainTickets(cfg.GetPrinterNo(), (int)this.TicketsNumInPrinter);
-            await StorageProvider.SetRemainRibbons(cfg.GetPrinterNo(), (int)this.RibbonsNumInPrinter);
+            await StorageProvider.SetRemainTickets(cfg.GetPrinterNo(), (int) this.TicketsNumInPrinter);
+            await StorageProvider.SetRemainRibbons(cfg.GetPrinterNo(), (int) this.RibbonsNumInPrinter);
         }
 
         public async Task ResetPrinter()
         {
             await StorageProvider.SetRemainTickets(cfg.GetPrinterNo(), cfg.GetInitPrinterTickets());
             await StorageProvider.SetRemainRibbons(cfg.GetPrinterNo(), cfg.GetInitPrinterRibbons());
+            this.LoadPrinterSetting();
         }
 
     }

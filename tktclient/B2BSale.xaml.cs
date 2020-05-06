@@ -23,7 +23,7 @@ namespace tktclient
     /// <summary>
     /// B2BSale.xaml 的交互逻辑
     /// </summary>
-    public partial class B2BSale : Page
+    public partial class B2BSale : Page, ITktControlReviewLoad
     {
         private B2BSaleViewModel _viewModel;
 
@@ -75,6 +75,11 @@ namespace tktclient
             if (radioButton == null || radioButton.DataContext == null)
                 return;
             this._viewModel.CurTicket = radioButton.DataContext as SelectedTicketModel;
+        }
+
+        public void ReviewLoad()
+        {
+            (this._viewModel as ITktControlReviewLoad).ReviewLoad();
         }
     }
 }

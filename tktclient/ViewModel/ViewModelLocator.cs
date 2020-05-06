@@ -48,6 +48,7 @@ namespace tktclient.ViewModel
             SimpleIoc.Default.Register<TicketExchangeViewModel>();
             SimpleIoc.Default.Register<B2BSaleViewModel>();
             SimpleIoc.Default.Register<SetViewModel>();
+            SimpleIoc.Default.Register<TicketTeamViewModel>();
         }
 
         public MainViewModel Main
@@ -94,6 +95,14 @@ namespace tktclient.ViewModel
             get
             {
                 return new SetViewModel();
+            }
+        }
+
+        public TicketTeamViewModel TicketTeam
+        {
+            get
+            {
+                return new TicketTeamViewModel();
             }
         }
 

@@ -85,5 +85,7 @@ namespace tktclient.Services
         public TicketSnapshotDto Snapshot { get; set; }
 
         public int PrintedCount { get; set; }
+
+        public string EnterTime { get; set; }
     }
 }

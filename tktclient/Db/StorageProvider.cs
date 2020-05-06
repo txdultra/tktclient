@@ -29,6 +29,10 @@ namespace tktclient.Db
             Dapper.SqlMapper.SetTypeMap(typeof(PrinterLog), new ColumnAttributeTypeMapper<PrinterLog>());
             Dapper.SqlMapper.SetTypeMap(typeof(TktPrint), new ColumnAttributeTypeMapper<TktPrint>());
             connectionString = ResolveConnectionString(cfg.DbConnectionString());
+
+            //var nnn = "server=58.221.97.174;database=tktdb;uid=tktsrv;pwd=txd123;charset='utf8';SslMode = none;port=3306;";
+            //var enstr = NoBuilder.AESEncrypt(nnn, DB_SECRET_KEY);
+            //var xx = enstr.Length;
         }
 
         public static IDbTransaction GetTransaction()
@@ -135,8 +139,8 @@ namespace tktclient.Db
             using (IDbConnection conn = GetConnection())
             {
                 conn.Open();
-                var sql = "insert into child_orders(cloud_id,order_id,order_no,order_type,tkt_id,tkt_name,amount,unit_price,nums,per_nums,create_time,is_sync,prints,use_date)" +
-                          " values(@CloudId,@OrderId,@OrderNo,@OrderType,@TicketId,@TicketName,@Amount,@UnitPrice,@Nums,@PerNums,@CreateTime,@IsSync,@Prints,@UseDate);" +
+                var sql = "insert into child_orders(cloud_id,order_id,order_no,order_type,tkt_id,tkt_name,amount,unit_price,nums,per_nums,create_time,is_sync,prints,use_date,enter_time)" +
+                          " values(@CloudId,@OrderId,@OrderNo,@OrderType,@TicketId,@TicketName,@Amount,@UnitPrice,@Nums,@PerNums,@CreateTime,@IsSync,@Prints,@UseDate,@EnterTime);" +
                           "select last_insert_id();";
                 var result = await conn.ExecuteScalarAsync<int>(sql, childOrder);
                 if (result > 0)
@@ -155,7 +159,7 @@ namespace tktclient.Db
                 conn.Open();
                 var sql =
                     "update child_orders set cloud_id=@CloudId,order_id=@OrderId,order_no=@OrderNo,order_type=@OrderType,tkt_id=@TicketId,tkt_name=@TicketName,amount=@Amount," +
-                    "unit_price=@UnitPrice,nums=@Nums,per_nums=@PerNums,create_time=@CreateTime,is_sync=@IsSync,prints=@Prints,use_date=@UseDate where id=@Id";
+                    "unit_price=@UnitPrice,nums=@Nums,per_nums=@PerNums,create_time=@CreateTime,is_sync=@IsSync,prints=@Prints,use_date=@UseDate,enter_time=@EnterTime where id=@Id";
                 var result = await conn.ExecuteAsync(sql, order);
                 if (result > 0)
                 {

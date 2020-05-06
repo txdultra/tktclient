@@ -13,6 +13,8 @@ namespace tktclient.Model
 
         public int Id { get; set; }
 
+        public int? EnterTime { get; set; }
+
         public string Name
         {
             get; set;
@@ -21,6 +23,8 @@ namespace tktclient.Model
         public int PerNumber { get; set; }
 
         public Decimal PriceRebate { get; set; }
+
+        public double? OriginalPrice { get; set; }
 
         public int SelectedCount
         {

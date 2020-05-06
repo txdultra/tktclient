@@ -16,7 +16,7 @@ using tktclient.Utils;
 
 namespace tktclient.ViewModel
 {
-    public class TicketExchangeViewModel : BusyStatusViewModel
+    public class TicketExchangeViewModel : BusyStatusViewModel, ITktControlReviewLoad
     {
         private ObservableCollection<OrderDto> _orderInfoCollection;
         private OrderDto _orderInfo;
@@ -354,9 +354,18 @@ namespace tktclient.ViewModel
                     childOrder.TicketName = stm.Snapshot.Name;
                     childOrder.Amount = stm.TotalPrice;
                     childOrder.UnitPrice = stm.UnitPrice;
+
+                    if (stm.Snapshot != null && stm.Snapshot.Prices.Any())
+                    {
+                        var oPrice = stm.Snapshot.Prices.First().OriginalPrice;
+                        childOrder.OriPrice = oPrice != null ? (decimal?) oPrice : null;
+                    }
+
                     childOrder.Nums = stm.Nums;
                     childOrder.PerNums = stm.PerNums;
                     childOrder.CreateTime = DateTime.Now;
+                    childOrder.EnterTime = stm.Snapshot?.Prices.FirstOrDefault()?.UseDate?.EnterTime;
+
                     if (stm.UseDate != null)
                     {
                         childOrder.UseDate = int.Parse(stm.UseDate?.ToString("yyyyMMdd"));
@@ -424,12 +433,18 @@ namespace tktclient.ViewModel
                 {
                     subOrder.PrintedCount = dbOrder.Prints;
                 }
-
+                var enterTime = subOrder.Snapshot?.Prices.FirstOrDefault()?.UseDate?.EnterTime;
+                subOrder.EnterTime = enterTime != null ? DateUtil.SecondToTimeSpan(enterTime.Value).ToString(@"hh\:mm") : string.Empty;
                 this.SelectedSubOrders.Add(subOrder);
                 this.PrintQuantity += subOrder.Nums;
                 this.PerQuantity += subOrder.PerNums;
             }
         }
 
+        public void ReviewLoad()
+        {
+            this.RemainTicket = ClientContext.RemainTickets;
+            this.RemainRibbons = ClientContext.RemainRibbons;
+        }
     }
 }

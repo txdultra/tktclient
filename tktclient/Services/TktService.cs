@@ -17,7 +17,10 @@ namespace tktclient.Services
             {"携程","2" },
             {"驴妈妈","6" },
             {"同城","7" },
-            {"美团","8" }
+            {"美团","8" },
+            {"今启网","11" },
+            {"南通濠滨网","12"},
+            {"来这选","13" }
         };
 
         public static string GetB2BName(string value)
@@ -36,43 +39,81 @@ namespace tktclient.Services
             ;
         }
 
-        public static ResultT<List<TicketDto>> GetTickets(string b2bValue = null)
+        public static ResultT<List<TicketDto>> GetTickets(string partnerIds, string b2bValue = null)
         {
-            var partnerId = cfg.GetTktServiceValue("PartnerId");
+            //var partnerId = cfg.GetTktServiceValue("TktPartners");
+            var pids = partnerIds;
             if (!string.IsNullOrEmpty(b2bValue))
             {
                 switch (b2bValue)
                 {
                     case "2":
-                        partnerId = cfg.GetTktServiceValue("CtripPid");
+                        pids = cfg.GetTktServiceValue("CtripPid");
                         break;
                     case "6":
-                        partnerId = cfg.GetTktServiceValue("LumamaPid");
+                        pids = cfg.GetTktServiceValue("LumamaPid");
                         break;
                     case "7":
-                        partnerId = cfg.GetTktServiceValue("TongchengPid");
+                        pids = cfg.GetTktServiceValue("TongchengPid");
                         break;
                     case "8":
-                        partnerId = cfg.GetTktServiceValue("meituan");
+                        pids = cfg.GetTktServiceValue("MeituanPid");
+                        break;
+                    case "11":
+                        pids = cfg.GetTktServiceValue("JinqiPid");
+                        break;
+                    case "12":
+                        pids = cfg.GetTktServiceValue("NthbPid");
+                        break;
+                    case "13":
+                        pids = cfg.GetTktServiceValue("LzxPid");
                         break;
                 }
             }
-
-            var http = GetClint();
-            var request = new RestRequest("v1/ticket/search");
-            var date = DateTime.Now.ToString("yyyyMMdd");
-            try
+            var partners = new List<string>();
+            var tmpPartners = pids.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
+            if (tmpPartners.Length > 1)
             {
-                request.AddParameter("cid", cfg.GetTktServiceValue("Cid"));
-                request.AddParameter("scenic_sid", cfg.GetTktServiceValue("ScenicSpotId"));
-                request.AddParameter("partner_id", partnerId);
-                request.AddParameter("date", date);
-                var result = http.Execute(request, Method.GET);
-                return JsonConvert.DeserializeObject<ResultT<List<TicketDto>>>(result.Content);
-            }catch(Exception e)
-            {
-                return new ResultT<List<TicketDto>> { Code = Result.NETWORK_FAIL, Msg = e.Message };
+                partners = tmpPartners.ToList();
             }
+            else
+            {
+                partners.Add(pids);
+            }
+
+            ResultT<List<TicketDto>> result = null;
+            foreach (var pid in partners)
+            {
+                var http = GetClint();
+                var request = new RestRequest("v1/ticket/search");
+                var date = DateTime.Now.ToString("yyyyMMdd");
+                try
+                {
+                    request.AddParameter("cid", cfg.GetTktServiceValue("Cid"));
+                    request.AddParameter("scenic_sid", cfg.GetTktServiceValue("ScenicSpotId"));
+                    request.AddParameter("partner_id", pid);
+                    request.AddParameter("date", date);
+                    var r = http.Execute(request, Method.GET);
+                    if (result == null)
+                    {
+                        result = JsonConvert.DeserializeObject<ResultT<List<TicketDto>>>(r.Content);
+                    }
+                    else
+                    {
+                        var tds = JsonConvert.DeserializeObject<ResultT<List<TicketDto>>>(r.Content);
+                        if (tds.Code == Result.RESULT_SUCCESS)
+                        {
+                            result.data.AddRange(tds.data);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    return new ResultT<List<TicketDto>> {Code = Result.NETWORK_FAIL, Msg = e.Message};
+                }
+            }
+
+            return result;
         }
 
         public static ResultT<ClientUserDto> Login(string userName, string pwd)

@@ -1,0 +1,186 @@
+﻿<Page x:Class="tktclient.TicketTeam"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:tktclient.Controls"
+      Title="TktSale" DataContext="{Binding Path=TicketTeam, Source={StaticResource SaleLocator}}">
+    <FrameworkElement.Resources>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="FrameworkElement.Margin" Value="0"/>
+            <Setter Property="Control.Foreground" Value="{StaticResource MainGrayForeground}"/>
+        </Style>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="TextBlock.FontSize" Value="13"/>
+        </Style>
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="Control.Foreground" Value="{StaticResource MainGrayForeground}"/>
+        </Style>
+    </FrameworkElement.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="360"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Column="0" Background="{DynamicResource MainSideBackground}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+
+            </StackPanel>
+            <TextBlock Text="选择门票" Grid.Row="1" Foreground="{StaticResource MainGrayForeground}"  Margin="21 0 0 0"
+                 HorizontalAlignment="Left"/>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0 0 20 0">
+
+            </StackPanel>
+            <Grid Name="gridTikets" Row="2">
+                <ListBox Name="listTickets" HorizontalAlignment="Center" Margin="0 10 0 10"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="false"
+                 ItemsSource="{Binding CurrentTickets}">
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Control.Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <local:ComboTicketBtn Margin="0 8 0 8" Width="322" HorizontalAlignment="Left" DataContext="{Binding}"
+                                             CommandParameter="{Binding}" Click="TicketRadioButton_Click"/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                </ListBox>
+            </Grid>
+        </Grid>
+        <Grid Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="57"/>
+                <RowDefinition Height="137"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="已选门票" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20 0 0 0"
+                Foreground="{StaticResource MainGrayForeground}"/>
+            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0 0 25 0">
+                <TextBlock Text="机内余票：" Foreground="{StaticResource MainGrayForeground}"/>
+                <TextBlock FontWeight="Bold" MinWidth="50" Foreground="{StaticResource MainGrayForeground}"
+                   Text="{Binding RemainTicket}" />
+                <TextBlock Text="剩余碳带：" Margin="20 0 0 0" Foreground="{StaticResource MainGrayForeground}" />
+                <TextBlock FontWeight="Bold" MinWidth="50"
+                   Text="{Binding RemainRibbons}" Foreground="{StaticResource MainGreenForeground}"/>
+            </StackPanel>
+            <Border Grid.Row="1" Margin="20 0 20 0" BorderThickness="1" BorderBrush="{StaticResource MainBorderBrush}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Row="0">
+                        <FrameworkElement.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="TextBlock.FontSize" Value="12"/>
+                                <Setter Property="FrameworkElement.HorizontalAlignment" Value="Left"/>
+                                <Setter Property="FrameworkElement.VerticalAlignment" Value="Center"/>
+                                <Setter Property="TextBlock.Foreground" Value="{StaticResource MainGrayForeground}"/>
+                                <Setter Property="FrameworkElement.Margin" Value="13 0 0 0"/>
+                            </Style>
+                        </FrameworkElement.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.6*"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="210"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Background="Transparent" Grid.ColumnSpan="5"  BorderBrush="{StaticResource MainBorderBrush}"
+                            BorderThickness="0 0 0 1" Opacity="0.5"/>
+                        <TextBlock Text="票名" Grid.Column="0"/>
+                        <TextBlock Text="条码" Grid.Column="1" HorizontalAlignment="Center" Margin="0"/>
+                        <TextBlock Text="场次" Grid.Column="2" HorizontalAlignment="Center" Margin="0"/>
+                        <TextBlock Text="单价（每人）" Grid.Column="3" HorizontalAlignment="Right" Margin="0 0 30 0"/>
+                        <TextBlock Text="人数（每张）" Grid.Column="4" HorizontalAlignment="Center" Margin="0 0 0 0"/>
+                    </Grid>
+                    <ListBox Name="listSelected" Grid.Row="1" Focusable="true" ItemsSource="{Binding SelectedTickets}">
+                        <FrameworkElement.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="清空" Command="{Binding ClearCommand}"/>
+                                <MenuItem Header="移除选中项" Command="{Binding DeleteCommand}"/>
+                            </ContextMenu>
+                        </FrameworkElement.ContextMenu>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="Control.Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                            <local:TicketSelectedButton Click="SelectedTicket_Click" Margin="0" Height="60" GroupName="SelectedTicket" HorizontalAlignment="Stretch"
+                                                                           DataContext="{Binding}" UpdateEnent="TicketSelectedButton_UpdateEnent"/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                    </ListBox>
+                </Grid>
+            </Border>
+            <Border Grid.Row="2" Background="{DynamicResource MainSideBackground}" BorderThickness="1 0 1 0"
+              BorderBrush="#e4e9ea" Margin="20 0 20 0">
+                <Grid>
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal" Margin="15 0 0 0">
+                        <TextBlock Text="总金额：" VerticalAlignment="Center"/>
+                        <TextBlock FontSize="15" VerticalAlignment="Center"
+                       Text="{Binding TotalAmount, StringFormat=￥{0:N2}}"/>
+                        <TextBlock Text="总人数：" VerticalAlignment="Center"
+                       Margin="30 0 0 0"/>
+                        <TextBlock FontSize="15" VerticalAlignment="Center"
+                       Text="{Binding TotalQuantity}"/>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Right" Height="34" Margin="0 0 15 0" Orientation="Horizontal">
+                        <Button Style="{DynamicResource NumLeftButtonStyle}" Width="70" Height="34" Content="读卡"
+                    BorderThickness="1" IsEnabled="{Binding IsIcBtnEnabled}" Command="{Binding ReadCardCommand}"/>
+                        <Button Style="{DynamicResource NumMidButtonStyle}" Width="80" Height="34" Content="选择条码"
+                    BorderThickness="1" IsEnabled="{Binding IsBarBtnEnabled}" Command="{Binding BarCodeCommand}"/>
+                        <Button Style="{DynamicResource NumMidButtonStyle}" Width="80" Height="34" Content="身份信息"
+                    BorderThickness="1" IsEnabled="{Binding IsIdBtnEnabled}" Command="{Binding ReadIdCardCommand}"/>
+                        <Button Style="{DynamicResource NumMidButtonStyle}" Width="70" Height="34" Content="移除" BorderThickness="1"
+                    IsEnabled="{Binding IsRemoveBtnEnabled}" Command="{Binding DeleteCommand}"/>
+                        <Button Style="{DynamicResource NumRightButtonStyle}" Width="70" Height="34" Content="清空"
+                    BorderThickness="1" Command="{Binding ClearCommand}"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border Grid.Row="3" BorderThickness="1 0 1 1" BorderBrush="#e4e9ea" Margin="20 0 20 20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Border CornerRadius="3" BorderThickness="1" BorderBrush="#e4e9ea" Margin="15 0 15 0" Height="80">
+                        <TextBox BorderThickness="0" Foreground="{StaticResource MainGrayForeground}"
+                     VerticalAlignment="Stretch" TextWrapping="Wrap" VerticalContentAlignment="Top"
+                     BorderBrush="Transparent" Padding="0" FontSize="12" Margin="10 5 10 5"
+                     Text="{Binding Remark, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <Button x:Name="btnSettle" Width="244" Height="80" FontSize="14" Grid.Column="1" Margin="0 0 16 0"
+                  BorderThickness="0" Background="{DynamicResource MainBlueColor}" Command="{Binding SettleCommand}">
+                        <Grid Width="228">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="确认结算" Foreground="{StaticResource MainTextForeground}" FontSize="23" Width="50"
+                         Margin="10 0 0 0" TextWrapping="Wrap"/>
+                            <TextBlock Grid.Column="1" Foreground="{StaticResource MainTextForeground}" FontSize="26" IsEnabled="false"
+                         VerticalAlignment="Center" HorizontalAlignment="Center"
+                         Text="{Binding TotalAmount, StringFormat=￥{0:N2}}"/>
+                        </Grid>
+                    </Button>
+                </Grid>
+            </Border>
+        </Grid>
+        <local:ProcessGrid x:Name="process" Grid.ColumnSpan="2" GridBackground="Transparent" BusyText="{Binding BusyContent}"
+                              Visibility="{Binding IsBusy, Converter={StaticResource bvc}}"/>
+    </Grid>
+</Page>

@@ -14,7 +14,7 @@ using tktclient.Utils;
 
 namespace tktclient.ViewModel
 {
-    public class B2BSaleViewModel : BusyStatusViewModel, ITktControlReviewLoad
+    public class TicketTeamViewModel : BusyStatusViewModel, ITktControlReviewLoad
     {
         private ObservableCollection<TicketModel> _currentTickets;
         private ObservableCollection<SelectedTicketModel> _selectedTickets;
@@ -26,12 +26,10 @@ namespace tktclient.ViewModel
         private ICommand _settleCommand;
         private OrderEntity order;
         private string _remark = "";
-        private string _b2bNo = "";
-        private string _selectB2BValue = "";
         private int _remainTicket;
         private int _remainRibbons;
 
-        public B2BSaleViewModel()
+        public TicketTeamViewModel()
         {
             this._remainTicket = ClientContext.RemainTickets;
             this._remainRibbons = ClientContext.RemainRibbons;
@@ -116,16 +114,6 @@ namespace tktclient.ViewModel
             }
         }
 
-        public string B2BNo
-        {
-            get { return this._b2bNo; }
-            set
-            {
-                this._b2bNo = value;
-                this.RaisePropertyChanged(nameof(_b2bNo));
-            }
-        }
-
         public int RemainTicket
         {
             get
@@ -152,17 +140,15 @@ namespace tktclient.ViewModel
             }
         }
 
-        public async void LoadTickets(string b2b)
+
+        public async void LoadTickets()
         {
-            this._selectB2BValue = b2b;
-            B2BSaleViewModel ticketSaleViewModel = this;
-            this.ClearTickets();
-            this.CurrentTickets.Clear();
+            TicketTeamViewModel ticketSaleViewModel = this;
             try
             {
                 ticketSaleViewModel.IsBusy = true;
                 ticketSaleViewModel.BusyContent = "正在加载数据...";
-                var result = TktService.GetTickets(null,b2b);
+                var result = TktService.GetTickets(new Config().GetTktServiceValue("TktTeamPartner"));
                 if (result.Code == Result.RESULT_SUCCESS)
                 {
                     var tkts = result.data.Where(a => a.Prices.Count > 0).Select(a =>
@@ -200,18 +186,18 @@ namespace tktclient.ViewModel
 
         private async void Add(int id, int num, TicketModel ticket)
         {
-            B2BSaleViewModel ticketSaleViewModel = this;
+            TicketTeamViewModel ticketSaleViewModel = this;
             SelectedTicketModel item = ticketSaleViewModel.SelectedTickets.FirstOrDefault((t => t.TicketId == id));
             if (item != null)
             {
-                if (item.Number >= item.MaxNum)
-                {
-                    NavigationServiceHelper.NoticeWarn($"最大数量为{(object)item.MaxNum}张", "提示", true, 3);
-                    return;
-                }
-                ++item.Number;
-                int num1 = await ticketSaleViewModel.SetPrintNumber(item) ? 1 : 0;
-                item.SumPrice = item.RealPrice * item.Number;
+                //if (item.Number >= item.MaxNum)
+                //{
+                //    NavigationServiceHelper.NoticeWarn($"最大数量为{(object)item.MaxNum}张", "提示", true, 3);
+                //    return;
+                //}
+                //++item.Number;
+                //int num1 = await ticketSaleViewModel.SetPrintNumber(item) ? 1 : 0;
+                //item.SumPrice = item.RealPrice * item.Number;
             }
             else if (ticket != null)
             {
@@ -219,13 +205,13 @@ namespace tktclient.ViewModel
                 var selectedTicketModel = new SelectedTicketModel();
                 selectedTicketModel.TicketId = ticket.Id;
                 selectedTicketModel.OriginalPrice = ticket.OriginalPrice;
-                selectedTicketModel.TicketKindName = "电商票";
+                selectedTicketModel.TicketKindName = "个人票";
                 selectedTicketModel.Number = num1;
                 selectedTicketModel.SumPrice = ticket.PriceRebate * num1;
                 selectedTicketModel.RealPrice = ticket.PriceRebate;
                 selectedTicketModel.Barcodes = null;
                 selectedTicketModel.BarcodeTypeName = "二维码";
-                selectedTicketModel.TicketModelName = ticket.Name + "("+TktService.GetB2BName(this._selectB2BValue)+")";
+                selectedTicketModel.TicketModelName = ticket.Name;
                 selectedTicketModel.PerNumber = ticket.PerNumber;
                 selectedTicketModel.EnterTime = ticket.EnterTime != null ? DateUtil.SecondToTimeSpan(ticket.EnterTime.Value).ToString(@"hh\:mm") : string.Empty;
                 item = selectedTicketModel;
@@ -266,7 +252,7 @@ namespace tktclient.ViewModel
             {
                 int num = await this.SetPrintNumber(data) ? 1 : 0;
                 data.SumPrice = data.Number * data.RealPrice;
-                this.UpdateTicketNum(data);
+                //this.UpdateTicketNum(data);
             }
             this.TotalAmount = this.SelectedTickets.Sum(t => t.SumPrice);
             this.TotalQuantity = this.SelectedTickets.Sum(t => t.Number);
@@ -339,7 +325,7 @@ namespace tktclient.ViewModel
 
         public async Task<bool> SettleCheck()
         {
-            B2BSaleViewModel ticketSaleViewModel = this;
+            TicketTeamViewModel ticketSaleViewModel = this;
             try
             {
                 ticketSaleViewModel.IsBusy = true;
@@ -354,15 +340,9 @@ namespace tktclient.ViewModel
                     NavigationServiceHelper.NoticeWarn("请选择门票数量", "选择门票数量", true, 3);
                     return false;
                 }
-                if (this.B2BNo.Trim().Length == 0)
+                if (string.IsNullOrEmpty(Remark))
                 {
-                    NavigationServiceHelper.NoticeWarn("请填写电商换票码", "换票码", true, 3);
-                    return false;
-                }
-                var exCodeCount = await StorageProvider.GetOrderByExCodeCount(this.B2BNo.Trim(), OrderTypes.电商换票);
-                if (exCodeCount > 0) 
-                {
-                    NavigationServiceHelper.NoticeWarn("换票码已使用", "已使用", true, 3);
+                    NavigationServiceHelper.NoticeWarn("团票必须填写团客来源", "团客来源", true, 3);
                     return false;
                 }
                 return true;
@@ -383,16 +363,40 @@ namespace tktclient.ViewModel
             if (!await this.SettleCheck())
                 return;
             //监控打印纸数量
-            ConfirmWindow confirmWindow = new ConfirmWindow("确定打印？", "提示", ConfirmType.Warn, ConfirmButton.OkCancel, false);
-            if (!NavigationServiceHelper.ShowOwnerWin(confirmWindow, true) || confirmWindow._ConfirmResult != ConfirmResult.Ok)
-                return;
-            var tOrder = await CreateOrder();
-            if (tOrder == null)
+            this.ConfirmPay();
+        }
+
+        private async void ConfirmPay()
+        {
+            var tOrder = CreateOrder();
+            if (tOrder.Result == null)
             {
                 NavigationServiceHelper.NoticeWarn("订单创建失败", "警告", true, 5);
                 return;
             }
-            this.IssueTicket(tOrder);
+
+            var barPay = new BarcodePay();
+            barPay.AllPayTypes.Add(new PayTypeDto()
+            {
+                Id = 1,
+                Name = "现金",
+                Code = "Cash",
+                IsOnline = false
+            });
+            barPay.OrderNo = tOrder.Result.OrderNo;
+            barPay.TotalFee = tOrder.Result.Amount;
+            ConfimPayWin confimPayWin = new ConfimPayWin(barPay);
+            if (!NavigationServiceHelper.ShowOwnerWin(confimPayWin, true) || confimPayWin.PayResult == null || confimPayWin.PayResult.PayStatus == PayResultType.未支付)
+                return;
+            var payResult = confimPayWin.PayResult;
+            this.order.State = (int)OrderStates.已支付;
+            this.order.PayType = payResult.SelectedPayInfos.Id;
+            this.order.RealPay = payResult.TotalPay;
+            this.order.ChangePay = payResult.Change;
+            this.order.ShouldPay = payResult.ShouldPay;
+            this.order.Remark = this.Remark;
+            await Db.StorageProvider.UpdateOrder(this.order);
+            this.IssueTicket();
         }
 
         private async Task<OrderEntity> CreateOrder()
@@ -402,15 +406,16 @@ namespace tktclient.ViewModel
             order = new OrderEntity();
             order.OrderNo = NoBuilder.NewOrderNo(DateTime.Now);
 
+            //var code = System.Web.HttpUtility.UrlEncode(NoBuilder.QRCodeEncrypt(order.OrderNo));
+            //var cc = code;
+
             order.Nums = this.TotalQuantity;
-            order.OrderType = (int)OrderTypes.电商换票;
+            order.OrderType = (int)OrderTypes.团票;
             order.Amount = this.TotalAmount;
             order.PerNums = this.SelectedTickets.Sum(s => s.PerNumber * s.Number);
             order.CreateTime = DateTime.Now;
             order.State = (int)OrderStates.未支付;
-            order.PayType = (int)PayTypes.电商支付;
-            order.ExCode = this.B2BNo;
-            order.Ext1 = this._selectB2BValue;
+            order.PayType = (int)PayTypes.现金;
             order.ClientNo = ClientContext.CurrentUser.SerialNo;
             var ok = await Db.StorageProvider.SaveOrder(order);
             if (ok)
@@ -418,16 +423,16 @@ namespace tktclient.ViewModel
                 foreach (var stm in this.SelectedTickets)
                 {
                     var childOrder = new ChildOrderEntity();
+                    childOrder.OrderType = (int) OrderTypes.团票;
                     childOrder.OrderId = order.Id;
-                    childOrder.OrderType = (short)OrderTypes.电商换票;
                     childOrder.OrderNo = order.OrderNo;
                     childOrder.TicketId = stm.TicketId;
                     childOrder.TicketName = stm.TicketModelName;
-                    childOrder.Amount = stm.SumPrice;
-                    childOrder.UnitPrice = stm.RealPrice;
+                    childOrder.Amount = stm.SumPrice ;
+                    childOrder.UnitPrice = stm.RealPrice * stm.Number;
                     childOrder.OriPrice = stm.OriginalPrice != null ? (decimal?)stm.OriginalPrice : null;
-                    childOrder.Nums = stm.Number;
-                    childOrder.PerNums = stm.PerNumber;
+                    childOrder.Nums = 1;
+                    childOrder.PerNums = stm.PerNumber * stm.Number;
                     childOrder.CreateTime = DateTime.Now;
                     childOrder.UseDate = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
                     childOrder.EnterTime = string.IsNullOrEmpty(stm.EnterTime) ? new int?() : DateUtil.TimeToInt(stm.EnterTime);
@@ -439,7 +444,7 @@ namespace tktclient.ViewModel
             return null;
         }
 
-        internal async void IssueTicket(OrderEntity order)
+        internal async void IssueTicket()
         {
             var ticketSaleViewModel = this;
             try
@@ -447,7 +452,7 @@ namespace tktclient.ViewModel
                 ticketSaleViewModel.IsBusy = true;
                 ticketSaleViewModel.BusyContent = "正在出票...";
 
-                var result = await Printer.Print(order, (childId, seq, success) =>
+                var result = Printer.Print(this.order, (childId, seq, success) =>
                 {
                     if (success)
                     {
@@ -455,7 +460,7 @@ namespace tktclient.ViewModel
                         this.RemainRibbons--;
                     }
                 });
-                if (!result)
+                if (!result.Result)
                 {
                     ticketSaleViewModel.ErrorMessage = "出票失败:打印失败。";
                     NavigationServiceHelper.NoticeError(ticketSaleViewModel.ErrorMessage, "提示", true, 5);
@@ -469,8 +474,8 @@ namespace tktclient.ViewModel
             finally
             {
                 ticketSaleViewModel.IsBusy = false;
-                ticketSaleViewModel.BusyContent = null;
                 ticketSaleViewModel.ClearTickets();
+                this.order = null;
             }
         }
 

@@ -17,7 +17,7 @@ using tktclient.Utils;
 
 namespace tktclient.ViewModel
 {
-    public class TicketSaleViewModel : BusyStatusViewModel
+    public class TicketSaleViewModel : BusyStatusViewModel, ITktControlReviewLoad
     {
         private ObservableCollection<TicketModel> _currentTickets;
         private ObservableCollection<SelectedTicketModel> _selectedTickets;
@@ -151,15 +151,21 @@ namespace tktclient.ViewModel
             {
                 ticketSaleViewModel.IsBusy = true;
                 ticketSaleViewModel.BusyContent = "正在加载数据...";
-                var result = TktService.GetTickets();
+                var result = TktService.GetTickets(new Config().GetTktServiceValue("TktPartners"));
                 if (result.Code == Result.RESULT_SUCCESS)
                 {
-                    var tkts = result.data.Where(a => a.Prices.Count > 0).Select(a => new TicketModel()
+                    var tkts = result.data.Where(a => a.Prices.Count > 0).Select(a =>
                     {
-                        Name = a.Name,
-                        PriceRebate = Convert.ToDecimal(a.Prices.First().price),
-                        Id = a.Id,
-                        PerNumber = a.PerNums
+                        var price = a.Prices.First();
+                        return new TicketModel()
+                        {
+                            Name = a.Name,
+                            PriceRebate = Convert.ToDecimal(price.price),
+                            Id = a.Id,
+                            PerNumber = a.PerNums,
+                            EnterTime = price.UseDate?.EnterTime,
+                            OriginalPrice = price.OriginalPrice
+                        };
                     }).ToList();
                     this.CurrentTickets = new ObservableCollection<TicketModel>(tkts);
                 }
@@ -201,6 +207,7 @@ namespace tktclient.ViewModel
                 int num1 = 1;
                 var selectedTicketModel = new SelectedTicketModel();
                 selectedTicketModel.TicketId = ticket.Id;
+                selectedTicketModel.OriginalPrice = ticket.OriginalPrice;
                 selectedTicketModel.TicketKindName = "个人票";
                 selectedTicketModel.Number = num1;
                 selectedTicketModel.SumPrice = ticket.PriceRebate * num1;
@@ -209,6 +216,7 @@ namespace tktclient.ViewModel
                 selectedTicketModel.BarcodeTypeName = "二维码";
                 selectedTicketModel.TicketModelName = ticket.Name;
                 selectedTicketModel.PerNumber = ticket.PerNumber;
+                selectedTicketModel.EnterTime = ticket.EnterTime != null ? DateUtil.SecondToTimeSpan(ticket.EnterTime.Value).ToString(@"hh\:mm") : string.Empty;
                 item = selectedTicketModel;
                 item.SumChangeEvent += ticketSaleViewModel.Item_SumChangeEvent;
                 if (await ticketSaleViewModel.SetPrintNumber(item))
@@ -413,16 +421,19 @@ namespace tktclient.ViewModel
                 foreach (var stm in this.SelectedTickets)
                 {
                     var childOrder = new ChildOrderEntity();
+                    childOrder.OrderType = (int)OrderTypes.门市;
                     childOrder.OrderId = order.Id;
                     childOrder.OrderNo = order.OrderNo;
                     childOrder.TicketId = stm.TicketId;
                     childOrder.TicketName = stm.TicketModelName;
                     childOrder.Amount = stm.SumPrice;
                     childOrder.UnitPrice = stm.RealPrice;
+                    childOrder.OriPrice = stm.OriginalPrice != null ? (decimal?)stm.OriginalPrice : null;
                     childOrder.Nums = stm.Number;
                     childOrder.PerNums = stm.PerNumber;
                     childOrder.CreateTime = DateTime.Now;
                     childOrder.UseDate = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
+                    childOrder.EnterTime = string.IsNullOrEmpty(stm.EnterTime) ? new int?() : DateUtil.TimeToInt(stm.EnterTime);
                     await Db.StorageProvider.SaveChildOrder(childOrder);
                 }
 
@@ -464,6 +475,12 @@ namespace tktclient.ViewModel
                 ticketSaleViewModel.ClearTickets();
                 this.order = null;
             }
+        }
+
+        public void ReviewLoad()
+        {
+            this.RemainTicket = ClientContext.RemainTickets;
+            this.RemainRibbons = ClientContext.RemainRibbons;
         }
     }
 }

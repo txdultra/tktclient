@@ -47,16 +47,26 @@ namespace tktclient.Utils
                     QRCodeGenerator.GenerateQRBarCode(encryptCode, codePath);
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     dictionary.Add("txtTicketModelInfo", stm.TicketName);
-                    dictionary.Add("txtTotalMoney", stm.UnitPrice.ToString());
-                    dictionary.Add("txtBarCode", "二维码");
+                    //dictionary.Add("txtTotalMoney", "￥"+stm.UnitPrice + "元/" + stm.PerNums + "人");
+                    if (stm.OriPrice != null)
+                        dictionary.Add("txtTotalMoney", "￥" + stm.OriPrice + "元/" + stm.PerNums + "人");
+                    else
+                        dictionary.Add("txtTotalMoney", stm.PerNums + "人");
+                    dictionary.Add("txtBarCode", "");
                     dictionary.Add("picBarCode", codePath);
                     dictionary.Add("txtAccountName", ClientContext.CurrentUser.UserName);
                     dictionary.Add("txtPeopleCount", stm.PerNums.ToString());
                     dictionary.Add("txtAccountNo", "");
                     dictionary.Add("txtTradeNO", stm.OrderNo);
+                    dictionary.Add("txtSubId", stm.Id.ToString());
                     dictionary.Add("txtDescription", "");
-                    dictionary.Add("txtInvalidDate", DateUtil.GetDateTime(stm.UseDate).ToString("yyyy-MM-dd"));
+                    dictionary.Add("txtInvalidDate", DateUtil.GetDateTime(stm.UseDate).ToString("yy/MM/dd"));
                     dictionary.Add("txtSaleDate", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                    if (stm.EnterTime != null)
+                    {
+                        dictionary.Add("txtEnterTime", DateUtil.SecondToTimeSpan(stm.EnterTime.Value).ToString(@"hh\:mm"));
+                    }
+
                     string message = "";
 
 

@@ -29,7 +29,7 @@ namespace tktclient
         {
             InitializeComponent();
             this.tbCopyRight.Text = "上海长甲集团";
-            this.tbVersionInfo.Text = "1.0.0";
+            this.tbVersionInfo.Text = Assemblies.AssemblyVersion();
             this._clearText = Guid.NewGuid().ToString();
             this.InitSellers();
         }

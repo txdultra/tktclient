@@ -26,6 +26,7 @@ namespace tktclient
     {
 
         private readonly IDictionary<string, Page> _userControlCache;
+        private readonly IDictionary<string, int> _userControlClickCount;
         private DispatcherTimer _Timer;
         private int TimeCount;
 
@@ -37,6 +38,7 @@ namespace tktclient
             this._viewModel = this.DataContext as MainViewModel;
             this.tbSeller.Text = ClientContext.CurrentUser?.UserName;
             _userControlCache = new Dictionary<string, Page>();
+            _userControlClickCount = new Dictionary<string, int>();
             this._Timer = new DispatcherTimer()
             {
                 Interval = TimeSpan.FromSeconds(1.0)
@@ -88,11 +90,32 @@ namespace tktclient
                         this._userControlCache.Add(functionCode, new TktExchange());
                     }
                     break;
+                case "TicketTeam":
+                    this.tbTitle.Text = "团队票";
+                    if (!this._userControlCache.ContainsKey(functionCode))
+                    {
+                        this._userControlCache.Add(functionCode, new TicketTeam());
+                    }
+                    break;
+            }
+
+            if (this._userControlClickCount.ContainsKey(functionCode))
+            {
+                this._userControlClickCount[functionCode]++;
+            }
+            else
+            {
+                this._userControlClickCount.Add(functionCode, 1);
             }
 
             if (!this._userControlCache.ContainsKey(functionCode))
                 return;
             this.mainFrame.Navigate(this._userControlCache[functionCode]);
+
+            if (this._userControlClickCount[functionCode] > 1)
+            {
+                (this._userControlCache[functionCode] as ITktControlReviewLoad)?.ReviewLoad();
+            }
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

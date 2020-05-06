@@ -33,6 +33,9 @@ namespace tktclient.Db
         [Column("unit_price")]
         public Decimal UnitPrice { get; set; }
 
+        [Column("ori_price")]
+        public Decimal? OriPrice { get; set; }
+
         [Column("nums")]
         public int Nums { get; set; }
         
@@ -51,7 +54,7 @@ namespace tktclient.Db
         [Column("use_date")]
         public int UseDate { get; set; }
 
-        [Column("use_time")]
-        public int UseTime { get; set; }
+        [Column("enter_time")]
+        public int? EnterTime { get; set; }
     }
 }

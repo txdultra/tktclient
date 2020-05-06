@@ -8,12 +8,10 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using GalaSoft.MvvmLight.Command;
 using tktclient.Controls;
 using tktclient.Model;
 using tktclient.ViewModel;
@@ -21,16 +19,16 @@ using tktclient.ViewModel;
 namespace tktclient
 {
     /// <summary>
-    /// TktSale.xaml 的交互逻辑
+    /// TicketTeam.xaml 的交互逻辑
     /// </summary>
-    public partial class TktSale : Page, ITktControlReviewLoad
+    public partial class TicketTeam : Page, ITktControlReviewLoad
     {
-        private TicketSaleViewModel _viewModel;
+        private TicketTeamViewModel _viewModel;
 
-        public TktSale()
+        public TicketTeam()
         {
             InitializeComponent();
-            this._viewModel = this.DataContext as TicketSaleViewModel;
+            this._viewModel = this.DataContext as TicketTeamViewModel;
             this._viewModel.LoadTickets();
         }
 
