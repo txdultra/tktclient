@@ -20,6 +20,8 @@ namespace tktclient.Model
 
         public int TicketId { get; set; }
 
+        public int TicketPid { get; set; }
+
         public string EnterTime { get; set; }
 
         public string BarcodeTypeName { get; set; }

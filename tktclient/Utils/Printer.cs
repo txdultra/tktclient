@@ -48,8 +48,8 @@ namespace tktclient.Utils
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     dictionary.Add("txtTicketModelInfo", stm.TicketName);
                     //dictionary.Add("txtTotalMoney", "￥"+stm.UnitPrice + "元/" + stm.PerNums + "人");
-                    if (stm.OriPrice != null)
-                        dictionary.Add("txtTotalMoney", "￥" + stm.OriPrice + "元/" + stm.PerNums + "人");
+                    if (stm.OriPrice > 0)
+                        dictionary.Add("txtTotalMoney", "￥" + stm.OriPrice * stm.Nums + "元/" + stm.PerNums + "人");
                     else
                         dictionary.Add("txtTotalMoney", stm.PerNums + "人");
                     dictionary.Add("txtBarCode", "");

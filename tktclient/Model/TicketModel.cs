@@ -13,6 +13,8 @@ namespace tktclient.Model
 
         public int Id { get; set; }
 
+        public int PriceId { get; set; }
+
         public int? EnterTime { get; set; }
 
         public string Name

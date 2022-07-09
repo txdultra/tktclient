@@ -164,7 +164,8 @@ namespace tktclient.ViewModel
                             Id = a.Id,
                             PerNumber = a.PerNums,
                             EnterTime = price.UseDate?.EnterTime,
-                            OriginalPrice = price.OriginalPrice
+                            OriginalPrice = price.OriginalPrice,
+                            PriceId = price.Id
                         };
                     }).ToList();
                     this.CurrentTickets = new ObservableCollection<TicketModel>(tkts);
@@ -184,13 +185,13 @@ namespace tktclient.ViewModel
             var ticket = obj as TicketModel;
             if (ticket == null)
                 return;
-            this.Add(ticket.Id, 1, ticket);
+            this.Add(ticket.Id,ticket.PriceId, 1, ticket);
         }
 
-        private async void Add(int id, int num, TicketModel ticket)
+        private async void Add(int id,int pid, int num, TicketModel ticket)
         {
             TicketSaleViewModel ticketSaleViewModel = this;
-            SelectedTicketModel item = ticketSaleViewModel.SelectedTickets.FirstOrDefault((t => t.TicketId == id));
+            SelectedTicketModel item = ticketSaleViewModel.SelectedTickets.FirstOrDefault((t => t.TicketId == id && t.TicketPid == pid));
             if (item != null)
             {
                 if (item.Number >= item.MaxNum)
@@ -207,6 +208,7 @@ namespace tktclient.ViewModel
                 int num1 = 1;
                 var selectedTicketModel = new SelectedTicketModel();
                 selectedTicketModel.TicketId = ticket.Id;
+                selectedTicketModel.TicketPid = ticket.PriceId;
                 selectedTicketModel.OriginalPrice = ticket.OriginalPrice;
                 selectedTicketModel.TicketKindName = "个人票";
                 selectedTicketModel.Number = num1;
@@ -243,7 +245,7 @@ namespace tktclient.ViewModel
         {
             if (item == null)
                 return;
-            var tktModel = this.CurrentTickets.FirstOrDefault((t => t.Id == item.TicketId));
+            var tktModel = this.CurrentTickets.FirstOrDefault((t => t.Id == item.TicketId && t.PriceId == item.TicketPid));
             if (tktModel == null)
                 return;
             tktModel.SelectedCount = item.Number;
@@ -428,7 +430,7 @@ namespace tktclient.ViewModel
                     childOrder.TicketName = stm.TicketModelName;
                     childOrder.Amount = stm.SumPrice;
                     childOrder.UnitPrice = stm.RealPrice;
-                    childOrder.OriPrice = stm.OriginalPrice != null ? (decimal?)stm.OriginalPrice : null;
+                    childOrder.OriPrice = stm.OriginalPrice ?? 0;
                     childOrder.Nums = stm.Number;
                     childOrder.PerNums = stm.PerNumber;
                     childOrder.CreateTime = DateTime.Now;

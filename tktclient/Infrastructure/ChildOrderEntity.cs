@@ -34,7 +34,7 @@ namespace tktclient.Db
         public Decimal UnitPrice { get; set; }
 
         [Column("ori_price")]
-        public Decimal? OriPrice { get; set; }
+        public double OriPrice { get; set; }
 
         [Column("nums")]
         public int Nums { get; set; }

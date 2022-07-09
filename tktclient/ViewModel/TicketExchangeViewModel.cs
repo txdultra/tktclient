@@ -358,7 +358,7 @@ namespace tktclient.ViewModel
                     if (stm.Snapshot != null && stm.Snapshot.Prices.Any())
                     {
                         var oPrice = stm.Snapshot.Prices.First().OriginalPrice;
-                        childOrder.OriPrice = oPrice != null ? (decimal?) oPrice : null;
+                        childOrder.OriPrice = oPrice ?? 0;
                     }
 
                     childOrder.Nums = stm.Nums;
